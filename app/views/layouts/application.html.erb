@@ -7,11 +7,17 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <header>
+    <div id="header-left">Periwinkle Blue</div>
+    <div id="header-right"><button class="btn btn-default">Log Off</button></div>
+  </header>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+  <%= yield %>
 
-<%= yield %>
-
+  <footer>
+    Home | How to Play | Contact Us
+  </footer>
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
 </body>
 </html>

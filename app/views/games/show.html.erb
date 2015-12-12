@@ -1,1 +1,97 @@
-Hellow games show page!
+<div id="container" class="clear">
+	<div id="games-left-column">
+		<div id="user1-turn" class="circle">HIDE?</div>
+		<div class="user1-info">
+			<div class="text-center">User 1</div>
+			<div>
+				<div class="pull-left">
+					Wins: 5
+					<br>
+					Losses: 5
+				</div>
+				<div class="pull-right">
+					IMAGE
+				</div>
+			</div>
+			<div class="clear text-center">Waiting on User 2</div>
+		</div>
+		<div class="text-center">
+			<br>
+			<button class="btn btn-warning">Declare Stalemate</button>
+			<br>
+			<br>
+			<button class="btn btn-danger">Surrender</button>
+			<br>
+			<br>
+			<hr>
+			<h2>Countdown</h2>
+			<br>
+			<br>
+			<h1>5:00</h1>
+		</div>
+	</div>
+
+	<div id="games-center-column">
+		<div id="score-board">
+			<div class="pull-left">
+				W: 2
+				<br>
+				L: 0
+			</div>
+
+			<div class="pull-left">
+				User 1 vs User 2
+			</div>
+
+			<div class="pull-right">
+				W: 0
+				<br>
+				L: 2
+			</div>
+		</div>
+
+		<div id="board">
+			<% @board.each_with_index do |x_item, x_index| %>
+				<% x_item.each do |y_item, y_index| %>
+					<% if y_item == 1 %>
+						<div class="white-cell"></div>
+					<% else %>
+						<div class="black-cell"></div>
+					<% end %>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+
+	<div id="games-right-column">
+		<div id="user2-turn" class="circle">TURN</div>
+		<div class="user2-info">
+			<div class="text-center">User 2</div>
+			<div>
+				<div class="pull-left">
+					Wins: 1
+					<br>
+					Losses: 8
+				</div>
+				<div class="pull-right">
+					IMAGE
+				</div>
+			</div>
+			<div class="clear text-center">Waiting on User 2</div>
+		</div>
+		<div class="text-center">
+			<br>
+			<button class="btn btn-warning">Declare Stalemate</button>
+			<br>
+			<br>
+			<button class="btn btn-danger">Surrender</button>
+			<br>
+			<br>
+			<hr>
+			<h2>Countdown</h2>
+			<br>
+			<br>
+			<h1 class="text-success">3:30</h1>
+		</div>
+	</div>
+</div>

@@ -1,3 +1,97 @@
 // Place all the styles related to the games controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+$board-size: 482px;
+$border-style: 1px solid #000;
+$cell-size: 60px;
+$column-id-margin: 10px auto 20px;
+
+#board {
+  border: $border-style;
+  height: $board-size;
+  margin: auto;
+  width: $board-size;
+}
+
+#games-center-column {
+  float: left;
+  margin: $column-id-margin;
+  width: 50%;
+}
+
+#games-left-column {
+  float: left;
+  margin: $column-id-margin;
+  width: 25%;
+}
+
+#games-right-column {
+  float: right;
+  margin: $column-id-margin;
+  width: 25%;
+}
+
+#score-board {
+  background-color: #808080;
+  border: $border-style;
+  color: #fff;
+  height: 50px;
+  margin: 0 auto 20px;
+  padding:5px;
+  width: $board-size;
+}
+
+#user1-turn {
+    margin: 0 auto 10px;
+}
+
+#user2-turn {
+    margin: 0 auto 10px;
+}
+
+.black-cell {
+  background-color: #000;
+  float: left;
+  height: $cell-size;
+  width: $cell-size;
+}
+
+.circle {
+    font-weight: bold;
+    font-style: italic;
+    position: relative;
+    border-radius: 100%;
+    background: #274e13;
+    border: 1px solid #F7F7F7;
+    width: 50px;
+    height: 50px;
+    margin: 10px 10px;
+    text-align: center;
+    color: #FFF;
+    font-size: 10px;
+    line-height: 50px;
+    cursor: pointer;
+}
+
+.user1-info {
+  background-color: #404040;
+  color: #fff;
+  border: $border-style;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.user2-info {
+  background-color: #80cf87;
+  color: #000;
+  border: $border-style;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.white-cell {
+  background-color: #fff;
+  float: left;
+  height: $cell-size;
+  width: $cell-size;
+}
