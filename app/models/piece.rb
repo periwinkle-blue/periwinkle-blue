@@ -1,6 +1,6 @@
 class Piece < ActiveRecord::Base	
 	belongs_to :game
-
+  
 	def is_obstructed?(x,y)
 		#determine direction that needs to be checked
 		if x_position == x
