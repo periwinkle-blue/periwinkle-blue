@@ -52,7 +52,6 @@ class Piece < ActiveRecord::Base
 		end
 		(1..range).each do |offset|
 			x_new += 1
-          
 			return true if game.pieces.where(x_position: x_new, y_position: y).present?
 		end
 		return false
