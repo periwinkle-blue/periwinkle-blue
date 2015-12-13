@@ -1,6 +1,6 @@
 class Piece < ActiveRecord::Base	
 	belongs_to :game
-
+  
 	def is_obstructed?(x,y)
 		#determine direction that needs to be checked
 		if x_position == x
@@ -52,6 +52,7 @@ class Piece < ActiveRecord::Base
 		end
 		(1..range).each do |offset|
 			x_new += 1
+          
 			return true if game.pieces.where(x_position: x_new, y_position: y).present?
 		end
 		return false
