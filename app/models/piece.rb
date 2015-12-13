@@ -2,17 +2,12 @@ class Piece < ActiveRecord::Base
 	belongs_to :game
 
 	def is_obstructed?(x,y)
-		@game = game
-		x1 = self.x_position
-		y1 = self.y_position
-		path = nil
-
 		#determine direction that needs to be checked
-		if x1 == x
+		if x_position == x
 			return is_obstructed_horizontally?(x,y)
-		elsif y1 == y
+		elsif y_position == y
 			return is_obstructed_vertically?(x,y)
-		elsif ((x1 - x) / (y1 - y)) == 1 or -1
+		elsif ((x_position - x) / (y_position - y)) == 1 or -1
 			return is_obstructed_diagonally?(x,y)
 		else
 			return false
@@ -35,13 +30,13 @@ class Piece < ActiveRecord::Base
 			(1..range).each do |offset|
 				x_new += 1
 				y_new += 1
-				return true if @game.pieces.where(x_position: x_new, y_position: y_new).present?
+				return true if game.pieces.where(x_position: x_new, y_position: y_new).present?
 			end
 		elsif (y_position < y and x_position > x) or (y_position > y and x_position < x)
 			(1..range).each do |offset|
 				x_new += 1
 				y_new -= 1
-				return true if @game.pieces.where(x_position: x_new, y_position: y_new).present?
+				return true if game.pieces.where(x_position: x_new, y_position: y_new).present?
 			end
 		end
 	
@@ -57,7 +52,7 @@ class Piece < ActiveRecord::Base
 		end
 		(1..range).each do |offset|
 			x_new += 1
-			return true if @game.pieces.where(x_position: x_new, y_position: y).present?
+			return true if game.pieces.where(x_position: x_new, y_position: y).present?
 		end
 		return false
 	end
@@ -71,11 +66,11 @@ class Piece < ActiveRecord::Base
 		end
 		(1..range).each do |offset|
 			y_new += 1
-			return true if @game.pieces.where(x_position: x, y_position: y_new).present?
+			return true if game.pieces.where(x_position: x, y_position: y_new).present?
 		end
 		return false
 	end
-	
+
 end
 
 
