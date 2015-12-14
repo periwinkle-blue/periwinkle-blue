@@ -65,4 +65,20 @@ RSpec.describe Piece, type: :model do
     expect(is_obstructed).to eq(true)
   end
   
+  it "should display the right icon unicode for a white and black bishop" do
+    bishop = Bishop.create( :color => 1, :x_position => 3, :y_position => 4, :game => @game)
+    expect(bishop.icon).to eq("&#9821;")
+    
+    bishop = Bishop.create( :color => 0, :x_position => 2, :y_position => 2, :game => @game)
+    expect(bishop.icon).to eq("&#9815;")
+  end
+  
+  it "should display the right icon unicode for a white and black king" do
+    king = King.create( :color => 1, :x_position => 3, :y_position => 4, :game => @game)
+    expect(king.icon).to eq("&#9818;")
+
+    king = King.create( :color => 0, :x_position => 1, :y_position => 0, :game => @game)
+    expect(king.icon).to eq("&#9812;")
+  end
+  
 end
