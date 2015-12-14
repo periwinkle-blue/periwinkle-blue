@@ -12,9 +12,6 @@ class Game < ActiveRecord::Base
   
   # Initialze board with 16 chess pieces to start the game
   def initialize_board
-    puts "In initialize board"
-    
-    Piece.delete_all
     
     # Create Pawns
     8.times do |index|
