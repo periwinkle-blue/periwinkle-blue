@@ -1,5 +1,5 @@
 PeriwinkleBlue::Application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "oauth_callback" }
   root 'static_pages#index'
 
   resources :games
