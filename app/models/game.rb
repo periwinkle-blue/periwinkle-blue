@@ -30,10 +30,10 @@ class Game < ActiveRecord::Base
     end
     
     # Create Kings and Queens
-    King.create( :x_position => 0, :y_position => 3, :color => 0, :game => self)
-    King.create( :x_position => 7, :y_position => 3, :color => 1, :game => self)
-    Queen.create( :x_position => 0, :y_position => 4, :color => 0, :game => self)
-    Queen.create( :x_position => 7, :y_position => 4, :color => 1, :game => self)
+    Queen.create( :x_position => 0, :y_position => 3, :color => 0, :game => self)
+    Queen.create( :x_position => 7, :y_position => 3, :color => 1, :game => self)
+    King.create( :x_position => 0, :y_position => 4, :color => 0, :game => self)
+    King.create( :x_position => 7, :y_position => 4, :color => 1, :game => self)
     
   end
   
