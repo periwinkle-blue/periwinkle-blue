@@ -1,0 +1,40 @@
+body.static_pages.index header {
+  display: none;
+}
+
+.hero {
+	background: 
+	linear-gradient(
+      rgba(0, 0, 0, 0.4), 
+      rgba(0, 0, 0, 0.6)
+    ), url('Chess_Knight_Blue.jpg') no-repeat center center ; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-height: 600px;
+	/*max-width: 1280px;*/
+	color: white;
+}
+
+.hero div {
+	padding-top: 50px;
+}
+
+.hero h1 {
+	font-size: 48px;
+}
+
+.herolink, .herolink:hover {
+	color: white;
+}
+
+footer {
+	color: white;
+	padding:5px 0px;
+	margin-top:10px;	
+}
+
+footer a, a:hover {
+	color: white;
+}
