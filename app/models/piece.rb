@@ -1,6 +1,7 @@
-class Piece < ActiveRecord::Base	
+class Piece < ActiveRecord::Base
 	belongs_to :game
-  
+    belongs_to :user
+
 	def is_obstructed?(x,y)
 		#determine direction that needs to be checked
 		if x_position == x
@@ -13,6 +14,11 @@ class Piece < ActiveRecord::Base
 			return false
 		end
 	end
+
+	# Check corners of board if piece is within board
+	#def is_onboard?(x, y)
+	#	(x >= 0 && x <= 7 && y >= 0 && y <= 7) ? true : false
+	#end
 
 	private
 
@@ -39,8 +45,8 @@ class Piece < ActiveRecord::Base
 				return true if game.pieces.where(x_position: x_new, y_position: y_new).present?
 			end
 		end
-	
-		return false	
+
+		return false
 	end
 
 	def is_obstructed_vertically?(x,y)
@@ -72,6 +78,3 @@ class Piece < ActiveRecord::Base
 	end
 
 end
-
-
-
