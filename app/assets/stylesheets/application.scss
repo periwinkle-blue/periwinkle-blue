@@ -27,6 +27,10 @@ body {
   background-color: $blue-background;
 }
 
+header {
+  background-color: $blue-background;
+ }
+
 footer {
   background-color: $blue-background;
   clear: both;
@@ -34,12 +38,6 @@ footer {
   font: 20px arial, sans-serif;
   height: 50px;
   text-align: center;
-}
-
-header {
-  background-color: $blue-background;
-  height: 100px;
-  padding: 10px;
 }
 
 #container {
@@ -54,6 +52,7 @@ header {
 
 #header-right {
   float: right;
+  text-align: right;
 }
 
 .clear {
