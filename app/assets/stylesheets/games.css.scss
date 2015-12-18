@@ -102,6 +102,15 @@ $column-id-margin: 10px auto 20px;
   font-size: 40px;
 }
 
+.highlighted {
+  border:3px solid yellow;
+}
+
 .icon {
   font-size: 45px;
 }
+
+a {
+  color:inherit;
+  text-decoration: none;
+ }
