@@ -1,6 +1,8 @@
 class King < Piece
   before_create :set_defaults
 
+  belongs_to :piece
+
   def set_defaults
     self.icon = (self.color == 1) ? "&#9818;" : "&#9812;"
   end
@@ -13,5 +15,5 @@ class King < Piece
     # Is x or y 1?
     return (x_move == 1) || (y_move == 1) ? true : false
   end
-  
+
 end
