@@ -15,6 +15,10 @@ class Piece < ActiveRecord::Base
 		end
 	end
 
+	def move_to(x,y)
+		update_attributes(x_position: x, y_position: y)
+	end
+
 	private
 
 	def is_obstructed_diagonally?(x,y)

@@ -1,0 +1,90 @@
+body.static_pages.index header {
+  display: none;
+}
+
+body.games.show {
+  background: white;
+}
+
+.btn {
+	border-radius: 0;
+}
+
+.hero {
+	background: 
+	linear-gradient(
+      rgba(0, 0, 0, 0.4), 
+      rgba(0, 0, 0, 0.6)
+    ), url('Chess_Knight_Blue.jpg') no-repeat center center ; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-height: 600px;
+	/*max-width: 1280px;*/
+	color: white;
+}
+
+.hero div {
+	padding-top: 50px;
+}
+
+.hero h1 {
+	font-size: 48px;
+}
+
+.herolink, .herolink:hover {
+	color: white;
+}
+
+.theking {
+	background: 
+	linear-gradient(
+      rgba(0, 0, 0, 0.4), 
+      rgba(0, 0, 0, 0.6)
+    ), url('Chess_The_King.jpg') no-repeat center center ; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-height: 600px;
+	/*max-width: 1280px;*/
+	color: white;
+}
+
+.theking div {
+	padding-top: 50px;
+}
+
+.theking h1 {
+	font-size: 48px;
+}
+
+.theking a {
+	color: white;
+}
+
+.theking .field {
+	padding: 10px 0px;
+}
+
+.theking .actions {
+	color: #333333;
+}
+
+.navbar {
+	padding: 10px 0px;
+	min-height: 0;
+	margin-bottom: 0px;
+	border: none;
+}
+
+footer {
+	color: white;
+	padding:5px 0px;
+	margin-top:10px;	
+}
+
+footer a, a:hover {
+	color: white;
+}

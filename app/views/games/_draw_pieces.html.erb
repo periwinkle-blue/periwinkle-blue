@@ -1,0 +1,38 @@
+<% @board.each_with_index do |x_item, x_index| %>
+  	<% x_item.each_with_index do |y_item, y_index| %>
+		<% @current_piece = @game.pieces.where(x_position: x_index, y_position: y_index).first %>
+		<% if y_item == 1 %>
+			<% if @selected_piece.present? and @selected_piece.x_position == x_index and @selected_piece.y_position == y_index %>
+				<div class="white-cell highlighted">	
+			<% else %>
+				<div class ="white-cell">
+			<% end %>	 
+				<% if @current_piece.present? and @selected_piece.present? %>                         	
+					<%= link_to @game.find_piece_icon(x_index, y_index), game_piece_path(@game, @selected_piece, :x => x_index, :y => y_index)  %>
+				<% elsif @current_piece.present? %>
+					<%= link_to @game.find_piece_icon(x_index, y_index), game_piece_path(@game, @current_piece)  %>
+				<% else %>
+					<% if @selected_piece.present? %>
+						<%= link_to "x", :x => x_index, :y => y_index %>
+					<% end %>
+				<% end %>                                      
+            </div>
+		<% else %>
+			<% if @selected_piece.present? and @selected_piece.x_position == x_index and @selected_piece.y_position == y_index %>
+				<div class="black-cell highlighted">	
+			<% else %>
+				<div class ="black-cell">
+			<% end %>	 
+				<% if @current_piece.present? and @selected_piece.present? %>                         	
+					<%= link_to @game.find_piece_icon(x_index, y_index), game_piece_path(@game, @selected_piece, :x => x_index, :y => y_index)  %>
+				<% elsif @current_piece.present? %>
+					<%= link_to @game.find_piece_icon(x_index, y_index), game_piece_path(@game, @current_piece)  %>
+				<% else %>
+					<% if @selected_piece.present? %>
+						<%= link_to "x", :x => x_index, :y => y_index %>
+					<% end %>
+				<% end %>
+            </div>               
+		<% end %>													
+	<% end %>
+<% end %>
