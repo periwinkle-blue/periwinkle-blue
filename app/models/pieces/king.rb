@@ -9,8 +9,10 @@ class King < Piece
 
   def valid_move?(x, y)
     # Calculate old move and new move
-    x_move = (x_position - x).abs
-    y_move = (y_position - y).abs
+    x_move = (x_position - x).abs # 1
+    y_move = (y_position - y).abs # 4
+
+    # 1 1 move to 2 5
 
     # Is x or y 1?
     return (x_move == 1) || (y_move == 1) ? true : false
