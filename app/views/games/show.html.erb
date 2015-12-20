@@ -51,20 +51,15 @@
 		</div>
 
 		<div id="board">
-			<% @board.each_with_index do |x_item, x_index| %>
-              <% x_item.each_with_index do |y_item, y_index| %>
-					<% if y_item == 1 %>
-						<div class="white-cell">
-                          <%= @game.find_piece_icon(x_index, y_index) %>
-                        </div>
-					<% else %>
-						<div class="black-cell">
-                          <%= @game.find_piece_icon(x_index, y_index) %>
-                        </div>
-					<% end %>
-				<% end %>
-			<% end %>
+			<%= render "draw_pieces"%>
 		</div>
+
+		<% if flash[:error].present? %>
+	      <div class="col-xs-10 col-xs-offset-1 alert alert-danger">
+	        <%= flash[:error] %>
+	      </div>
+   		 <% end %>
+   		 
 	</div>
 
 	<div id="games-right-column">
