@@ -10,24 +10,24 @@ class Knight < Piece
     x_move = (x_position - x).abs
     y_move = (y_position - y).abs
 
-=begin
-    # Calculate knight top move limited to 1 and left move is 0
-    if x_move == 1
-
-    # Calculate knight full move top or bottom
-    if x_move == 2
-        # Return true if x is 2 and y is 1
-        return (x_move == 2) && (y_move == 1) ? true : false
+    # If x or y move is 2 then the next x or y move is 1
+    if x_move == 2 || y_move == 2
+      if x_move == 2
+        # Return true if y is 1
+        return y_move == 1 ? true : false
+      else
+        # Return true if x is 1
+        return x_move == 1 ? true : false
+      end
+    elsif x_move == 1 || y_move == 1
+      if x_move == 1
+        # Return true if y is 2
+        return y_move == 2 ? true : false
+      else
+        # Return true if x is 2
+        return x_move == 2 ? true : false
+      end
     end
-
-    # Calculate knight full move left or right
-    if y_move == 2
-        # Return true if y is 2 and x is 1
-        return (y_move == 2) && (x_move == 1) ? true : false
-    end
-
-    # None of the moves were valid
-    return false
   end
-=end
+
 end
