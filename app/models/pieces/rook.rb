@@ -5,4 +5,13 @@ class Rook < Piece
     self.icon = (self.color == 1) ? "&#9820;" : "&#9814;"
   end
 
+  def valid_move?(x,y)
+  	if x_position == x || y_position == y
+  		return true
+  	else 
+  		return false
+  	end
+
+  end
+
 end
