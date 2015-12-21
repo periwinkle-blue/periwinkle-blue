@@ -1,8 +1,6 @@
 class King < Piece
   before_create :set_defaults
 
-  belongs_to :piece
-
   def set_defaults
     self.icon = (self.color == 1) ? "&#9818;" : "&#9812;"
   end
