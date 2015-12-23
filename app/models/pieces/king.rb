@@ -3,6 +3,7 @@ class King < Piece
 
   def set_defaults
     self.icon = (self.color == 1) ? "&#9818;" : "&#9812;"
+    self.first_move ||= true
   end
 
   def valid_move?(x, y)

@@ -3,6 +3,7 @@ class Knight < Piece
 
   def set_defaults
     self.icon = (self.color == 1) ? "&#9822;" : "&#9816;"
+    self.first_move ||= true
   end
 
   def valid_move?(x, y)

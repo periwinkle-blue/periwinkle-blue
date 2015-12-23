@@ -4,6 +4,7 @@ RSpec.describe Piece, type: :model do
   
   before do
     @game = Game.create
+    @game.clear_board_pieces
     @piece = @game.pieces.create( :x_position => 3, :y_position => 4)
 
   end
