@@ -1,12 +1,12 @@
 class Pawn < Piece
   before_create :set_defaults
-  attr_accessor :first_move
+  #attr_accessor :first_move
   
   def set_defaults
     self.icon = (self.color == 1) ? "&#9823;" : "&#9817;"
-    self.first_move = true
+    self.first_move ||= true
   end
-
+  
   def valid_move?(x, y)
     # Valid parameters passed in?
     valid_params = super
