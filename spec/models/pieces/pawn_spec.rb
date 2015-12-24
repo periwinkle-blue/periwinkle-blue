@@ -4,7 +4,7 @@ RSpec.describe Pawn, type: :model do
   
   before do
     @game = Game.create()
-    @game.clear_board_pieces
+    @game.clear_board!
     @pawn = Pawn.create( :color => 0, :x_position => 3, :y_position => 4, :game => @game)
   end
   
