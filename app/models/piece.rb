@@ -17,7 +17,7 @@ class Piece < ActiveRecord::Base
 
 	def move_to(x,y)
       updated_status = update_attributes(x_position: x, y_position: y)
-      self.first_move = false if self.type == "Pawn" and updated_status
+      self.moved = true if updated_status
 	end
   
     def valid_move?(x, y)
