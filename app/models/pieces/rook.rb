@@ -8,10 +8,14 @@ class Rook < Piece
 
   def valid_move?(x,y)
   	valid_params = super
-	return false if !valid_params
+	return false unless valid_params
 
-  	return true if x_position == x || y_position == y and ! is_obstructed?(x,y)
+  	return true if is_valid_horizontal_or_vertical_move?(x, y)
   	false
+  end
+
+  def is_valid_horizontal_or_vertical_move?(x, y)
+  	self.x_position == x || self.y_position == y and !self.is_obstructed?(x,y)
   end
 
 end
