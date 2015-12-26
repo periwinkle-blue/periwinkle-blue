@@ -7,11 +7,11 @@ class Game < ActiveRecord::Base
   
   def find_piece_icon(x,y)
     #piece = self.pieces.where( :x_position => x, :y_position => y).first
-    piece = piece_on?(x,y)
+    piece = piece_on(x,y)
     return (!piece.nil?) ? piece.icon.html_safe : ""
   end
   
-  def piece_on?(x,y)
+  def piece_on(x,y)
     return self.pieces.where( :x_position => x, :y_position => y).first
   end
   
@@ -43,7 +43,7 @@ class Game < ActiveRecord::Base
   end
   
   # For testing
-  def clear_board_pieces
+  def clear_board!
     self.pieces.delete_all
   end
   

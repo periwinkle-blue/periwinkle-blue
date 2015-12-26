@@ -5,7 +5,7 @@ RSpec.describe Game, type: :model do
   
   before do
     @game = Game.create
-    @game.clear_board_pieces
+    @game.clear_board!
   end
   
   it "should find matching piece in the game" do
