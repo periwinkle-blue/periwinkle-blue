@@ -6,8 +6,13 @@ class Game < ActiveRecord::Base
   belongs_to :black_player, class_name: "User"
   
   def find_piece_icon(x,y)
-    piece = self.pieces.where( :x_position => x, :y_position => y).first
+    #piece = self.pieces.where( :x_position => x, :y_position => y).first
+    piece = piece_on(x,y)
     return (!piece.nil?) ? piece.icon.html_safe : ""
+  end
+  
+  def piece_on(x,y)
+    return self.pieces.where( :x_position => x, :y_position => y).first
   end
   
   # Initialze board with 16 chess pieces to start the game
@@ -35,6 +40,11 @@ class Game < ActiveRecord::Base
     King.create( :x_position => 0, :y_position => 4, :color => 0, :game => self)
     King.create( :x_position => 7, :y_position => 4, :color => 1, :game => self)
     
+  end
+  
+  # For testing
+  def clear_board!
+    self.pieces.delete_all
   end
   
 end

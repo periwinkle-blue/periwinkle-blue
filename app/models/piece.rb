@@ -1,7 +1,7 @@
 class Piece < ActiveRecord::Base	
 	belongs_to :game
     belongs_to :user
-  
+    
 	def is_obstructed?(x,y)
 		#determine direction that needs to be checked
 		if x_position == x
@@ -16,10 +16,20 @@ class Piece < ActiveRecord::Base
 	end
 
 	def move_to(x,y)
-		update_attributes(x_position: x, y_position: y)
+      updated_status = update_attributes(x_position: x, y_position: y, :moved => true)
 	end
+  
+    def valid_move?(x, y)
+      # Valid parameters passed in?      
+      return false if params_out_of_bounds?(x, y)
+      return true
+    end
 
 	private
+  
+  def params_out_of_bounds?(x, y)
+    return true if x < 0 || y < 0 || x > 7 || y > 7
+  end
 
 	def is_obstructed_diagonally?(x,y)
 		range = (y_position - y).abs - 1
