@@ -10,7 +10,7 @@
 				<% end %>                                  
             </div>
 		<% else %>
-				<div class ="square black-cell" data-item-x=<%= x_index %> data-item-y=<%= y_index %> >	
+				<div class ="square brown-cell" data-item-x=<%= x_index %> data-item-y=<%= y_index %> >	
 					<% if @current_piece.present? %>
 						<div class ="piece draggable" data-item-id=<%= @current_piece.id %> data-update-url="<%= game_piece_path(@game, @current_piece.id) %>" >
 						<%= @game.find_piece_icon(x_index, y_index)  %>
