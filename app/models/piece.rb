@@ -17,6 +17,7 @@ class Piece < ActiveRecord::Base
 
 	def move_to(x,y)
 		update_attributes(x_position: x, y_position: y)
+		redirect_to game_path(game)
 	end
 
 	private

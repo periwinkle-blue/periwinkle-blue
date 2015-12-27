@@ -2,11 +2,10 @@ PeriwinkleBlue::Application.routes.draw do
   devise_for :users
   root 'static_pages#index'
 
-  resources :games, param: :game_id do
+  resources :games, :except => [:update, :patch]
 
-  end
 
-  get '/games/:game_id/:piece_id', to: 'games#show', :as => 'game_piece'
+  patch '/games/:game_id/:piece_id', to: 'pieces#update', :as => 'game_piece'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
