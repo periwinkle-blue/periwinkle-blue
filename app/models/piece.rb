@@ -27,9 +27,20 @@ class Piece < ActiveRecord::Base
 
 	private
   
-  def params_out_of_bounds?(x, y)
-    return true if x < 0 || y < 0 || x > 7 || y > 7
-  end
+    def is_valid_diagonal_move?(x, y)
+      x_diff = (self.x_position - x).abs
+      y_diff = (self.y_position - y).abs
+
+      x_diff == y_diff and !self.is_obstructed?(x,y)  
+    end
+
+    def is_valid_horizontal_or_vertical_move?(x, y)
+      (self.x_position == x or self.y_position == y) and !self.is_obstructed?(x,y)
+    end
+    
+    def params_out_of_bounds?(x, y)
+      return true if x < 0 || y < 0 || x > 7 || y > 7
+    end
 
 	def is_obstructed_diagonally?(x,y)
 		range = (y_position - y).abs - 1
