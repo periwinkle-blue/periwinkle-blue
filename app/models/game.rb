@@ -56,8 +56,10 @@ class Game < ActiveRecord::Base
 
   def find_king_obstruction(x, y, color)
     # Check horizontals for opposite queen and rook
-    king_in_check_left?(x, y, color)
+    #king_in_check_left?(x, y, color)
     #king_in_check_right?(x, y, color)
+    #king_in_check_top?(x, y, color)
+    king_in_check_bottom?(x, y, color)
 
   end
 
@@ -83,7 +85,7 @@ class Game < ActiveRecord::Base
         return true
       # Opposite rook is next piece found
       elsif left.type == "Rook" && left.color != color
-        # King is not in check
+        # King is in check
         return true
       else
         # Everything else found to the left of the king
@@ -116,6 +118,56 @@ class Game < ActiveRecord::Base
         return false
       end
       y += 1
+    end
+
+  end
+
+  def king_in_check_top?(x, y, color)
+    # Check king top position until 0 or obstructed for queen or rook
+    top = piece_on((x - 1), y)
+
+    while x >= 0
+      # Geesh nils!
+      if top.nil? && x > 0
+        x -= 1
+        # Update x position
+        top = piece_on(x, y)
+        next
+      elsif top.nil? && x == 0
+        return false
+      elsif top.type == "Queen" && top.color != color
+        return true
+      elsif top.type == "Rook" && top.color != color
+        return true
+      else
+        return false
+      end
+      x -= 1
+    end
+
+  end
+
+  def king_in_check_bottom?(x, y, color)
+    # Check king bottom position until 7 or obstructed for queen or rook
+    top = piece_on((x + 1), y)
+
+    while x <= 7
+      # Geesh nils!
+      if top.nil? && x < 7
+        x += 1
+        # Update x position
+        top = piece_on(x, y)
+        next
+      elsif top.nil? && x == 7
+        return false
+      elsif top.type == "Queen" && top.color != color
+        return true
+      elsif top.type == "Rook" && top.color != color
+        return true
+      else
+        return false
+      end
+      x += 1
     end
 
   end

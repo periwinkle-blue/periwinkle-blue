@@ -21,21 +21,7 @@ RSpec.describe Game, type: :model do
     piece = @game.find_piece_icon(0, 3)
     expect(piece).to eq("")
   end
-
-  #it "should know the positions of the kings" do
-  #  king_1 = King.create(:x_position => 3, :y_position => 3, :type => 'King', :color => 1, :game => @game)
-  #  king_0 = King.create(:x_position => 5, :y_position => 5, :type => 'King', :color => 0, :game => @game)
-
-  #  piece_1 = @game.find_king(king_1, 1)
-  #  piece_0 = @game.find_king(king_0, 0)
-  #  expect(piece_1).to eq(king_1)
-  #  expect(piece_1.x_position).to eq(3)
-  #  expect(piece_1.y_position).to eq(3)
-  #  expect(piece_0).to eq(king_0)
-  #  expect(piece_0.x_position).to eq(5)
-  #  expect(piece_0.y_position).to eq(5)
-  #end
-
+=begin
   it "should look through horizontally for rooks or queen" do
     king = King.create(:x_position => 3, :y_position => 2, :type => 'King', :color => 1, :game => @game)
     #rook = Rook.create(:x_position => 3, :y_position => 4, :type => 'Rook', :color => 0, :game => @game)
@@ -48,14 +34,20 @@ RSpec.describe Game, type: :model do
     # Pass current position of King to check
     expect(@game.king_in_check?("King", king.color)).to eq(true)
 
+  end
+=end
+  it "should look through vertically for rooks or queen" do
+    king = King.create(:x_position => 3, :y_position => 2, :type => 'King', :color => 1, :game => @game)
+    #rook = Rook.create(:x_position => 3, :y_position => 4, :type => 'Rook', :color => 0, :game => @game)
+    #rook = Rook.create(:x_position => 7, :y_position => 2, :type => 'Rook', :color => 0, :game => @game)
+    queen = Queen.create(:x_position => 6, :y_position => 2, :type => 'Queen', :color => 0, :game => @game)
+    #pawn = Pawn.create(:x_position => 7, :y_position => 2, :type => 'Pawn', :color => 0, :game => @game)
+    #target_square_1 = @game.pieces.create(:x_position => 3, :y_position => 7)
+    #target_square_2 = @game.pieces.create(:x_position => 3, :y_position => 0)
 
+    # Pass current position of King to check
+    expect(@game.king_in_check?("King", king.color)).to eq(true)
 
-    # Check if king is obstructed by rook
-    #rook_1_check = king_1.is_obstructed?(target_square_1.x_position, target_square_1.y_position)
-    #expect(rook_1_check).to eq(true)
-
-    #rook_2_check = king_1.is_obstructed?(target_square_2.x_position, target_square_2.y_position)
-    #expect(rook_2_check).to eq(true)
   end
 
 end
