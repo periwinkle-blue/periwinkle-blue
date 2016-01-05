@@ -48,123 +48,76 @@ class Game < ActiveRecord::Base
   end
 
   def king_in_check?(type, color)
-    @king = self.pieces.where(:type => 'King', :color => color).first
+    king = self.pieces.where(:type => 'King', :color => color).first
 
-    find_king_obstruction(@king.x_position, @king.y_position, @king.color)
+    # Pass current position of King to check
+    find_king_obstruction(king.x_position, king.y_position, king.color)
   end
 
   def find_king_obstruction(x, y, color)
-    @left = self.pieces.where(:x_position => (x - 1), :y_position => y).first
+    # Check horizontals for opposite queen and rook
+    king_in_check_left?(x, y, color)
+    #king_in_check_right?(x, y, color)
 
+  end
+
+  def king_in_check_left?(x, y, color)
     # Check king left horizontal position until 0 or obstructed for queen or rook
-    while x != 0
+    left = piece_on(x, (y - 1))
 
-      # Check if piece is on
-      if @left.type == "Queen" && @left.color != color
-        # Return true for check
-        return @left.type
-      elsif @left.type == "Rook" && @left.color != color
-        # Return true for check
-        return @left.type
+    while y >= 0
+      # Geesh nils!
+      # No piece at position before last column
+      if left.nil? && y > 0
+        y -= 1
+        # Update y position
+        left = piece_on(x, y)
+        next
+      # No piece at position at last column
+      elsif left.nil? && y == 0
+        # King is not in check
+        return false
+      # Opposite queen is next piece found
+      elsif left.type == "Queen" && left.color != color
+        # King is in check
+        return true
+      # Opposite rook is next piece found
+      elsif left.type == "Rook" && left.color != color
+        # King is not in check
+        return true
+      else
+        # Everything else found to the left of the king
+        # King is not in check
+        return false
       end
-
-      # Update loop
-      x -= 1
-
+      y -= 1
     end
 
   end
 
-=begin
-
+  def king_in_check_right?(x, y, color)
     # Check king right horizontal position until 7 or obstructed for queen or rook
-    while x != 7
-      # Check if piece is on
-      if find_piece_icon(x, y)
-        if piece.type == "Queen" && piece.color != color
-          # Return true for check
-          return true
-        elsif piece.type == "Rook" && piece.color != color
-          # Return true for check
-          return true
-        else
-          # Not checked
-          return false
-        end
-      end
-      # Update loop
-      x += 1
-    end
+    right = piece_on(x, (y + 1))
 
-    # Check king top vertical until 0 or obstructed for queen or rook
-    while y != 0
-      # Check if piece is on
-      if find_piece_icon(x, y)
-        if piece.type == "Queen" && piece.color != color
-          # Return true for check
-          return true
-        elsif piece.type == "Rook" && piece.color != color
-          # Return true for check
-          return true
-        else
-          # Not checked
-          return false
-        end
+    while y <= 7
+      # Geesh nils!
+      if right.nil? && y < 7
+        y += 1
+        # Update y position
+        right = piece_on(x, y)
+        next
+      elsif right.nil? && y == 7
+        return false
+      elsif right.type == "Queen" && right.color != color
+        return true
+      elsif right.type == "Rook" && right.color != color
+        return true
+      else
+        return false
       end
-      # Update loop
-      y -= 1
-    end
-
-    # Check king bottom vertical until 7 or obstructed for queen or rook
-    while y != 7
-      # Check if piece is on
-      if find_piece_icon(x, y)
-        if piece.type == "Queen" && piece.color != color
-          # Return true for check
-          return true
-        elsif piece.type == "Rook" && piece.color != color
-          # Return true for check
-          return true
-        else
-          # Not checked
-          return false
-        end
-      end
-      # Update loop
       y += 1
     end
 
-=end
-
-
-  # Find pieces to see if king is in check
-#  def king_in_check?(x, y, color)
-    #king_0 = find_king("King", 0)
-    #king_1 = find_king("King", 1)
-
-    #king_0_target = find_target_square(king_0.x_position, king_0.y_position, king_0.color)
-
-    # Check Rook
-    #king_0.is_obstructed?(x, y)
-    #king_1.is_obstructed?(x, y)
-
-    # Check if Bishop
-    # Check if Knight
-    # Check if Pawn
-    # Check if King
-
-#  end
-
-  # Find piece on target square
-  #def find_piece_on(x, y)
-  #  @piece_type = self.pieces.where(:x_position => x, :y_position => y).first
-  #  return @piece_type
-  #end
-
-  # Find the target square to pass to is_obstructed
-#  def find_target_square(x, y, color)
-
-
-#  end
+  end
 
 end
