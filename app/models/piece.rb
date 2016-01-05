@@ -19,14 +19,14 @@ class Piece < ActiveRecord::Base
       updated_status = update_attributes(x_position: x, y_position: y, :moved => true)
 	end
 
-    def valid_move?(x, y)
-      # Valid parameters passed in?      
-      return false if params_out_of_bounds?(x, y)
-      return true
-    end
+  def valid_move?(x, y)
+    # Valid parameters passed in?
+    return false if params_out_of_bounds?(x, y)
+    return true
+  end
 
 	private
-  
+
   def params_out_of_bounds?(x, y)
     return true if x < 0 || y < 0 || x > 7 || y > 7
   end
