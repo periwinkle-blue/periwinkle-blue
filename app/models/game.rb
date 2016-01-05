@@ -63,6 +63,8 @@ class Game < ActiveRecord::Base
 
   end
 
+
+
   def king_in_check_left?(x, y, color)
     # Check king left horizontal position until 0 or obstructed for queen or rook
     left = piece_on(x, (y - 1))
@@ -122,6 +124,7 @@ class Game < ActiveRecord::Base
 
   end
 
+
   def king_in_check_top?(x, y, color)
     # Check king top position until 0 or obstructed for queen or rook
     top = piece_on((x - 1), y)
@@ -168,6 +171,28 @@ class Game < ActiveRecord::Base
         return false
       end
       x += 1
+    end
+
+
+  def pawn_move_check(x, y, color)
+    #check diagonal at distance one for opposing pawns
+    king.color == black ? pawn_move = piece_on((x + 1), (y - 1))
+    : pawn_move = piece_on((x - 1), (y - 1))
+
+      while y < 7
+      if pawn_move.nil? && y < 6
+        y += 2
+        pawn_move = piece_on(x, y)
+        next
+      elsif pawn_move.nil? && y >= 6
+        return false
+      elsif pawn_move.type == "Pawn" && pawn_move.color != color
+        return true
+      elsif pawn_move.type == "Bishop" && pawn_move.color != color
+        return true
+      else
+        return false
+      end
     end
 
   end
