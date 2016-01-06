@@ -33,6 +33,9 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+#Add jquery-ui for drag and drop pieces
+gem 'jquery-ui-rails'
+
 # Add omniauth for Facebook authentication
 gem 'omniauth'
 gem 'omniauth-facebook'
