@@ -7,14 +7,6 @@ end
 
 RSpec.describe GamesController, type: :controller do
 
-	describe "Create a new game when not logged in" do
-		user = FactoryGirl.create(:user)
-		it "should redirect to the sign in page" do	
-			get :create
-			expect(response).to redirect_to(user_session_path)
-		end
- 	end
-
  	describe "Create a new game when logged in" do
 		user = FactoryGirl.create(:user)
 		before(:each) do

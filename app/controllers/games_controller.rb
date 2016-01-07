@@ -1,6 +1,5 @@
 class GamesController < ApplicationController
   skip_before_action :verify_authenticity_token
-  # before_action :authenticate_user!
   
   def create
     Game.create( :white_player_id => current_user.id )
@@ -9,7 +8,7 @@ class GamesController < ApplicationController
   end
 
   def update
-    @game = Game.find(params[:game_id])
+    @game = Game.find_by_id(params[:id])
     @game.update_attributes( :black_player_id => current_user.id )
     flash[:notice] = "You've joined the game!"
     redirect_to game_path(@game)
