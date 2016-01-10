@@ -22,6 +22,7 @@ class Piece < ActiveRecord::Base
 	  elsif target_piece !=nil and target_piece.color != self.color
 	  	target_piece.destroy
 	    update_attributes(piece_params) 
+	    
 	  else
 	  	update_attributes(piece_params)
 	  end
