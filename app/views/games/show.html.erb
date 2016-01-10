@@ -55,28 +55,39 @@
 
 		<script>
 			update_url = undefined; 
+			var original_position = '';
 			$(function() {
 				$('.piece').on ("mousedown", function() {
-					update_url= $(this).attr('data-update-url');
+					update_url = $(this).attr('data-update-url');
+					
 				});
 
 				$('.piece').draggable({ 
 					containment: "#board",
 					snap: ".square",
 					snapTolerance: 25,
-					 stop: function( event, ui ) {
-						
+					 start: function( event, ui ) {
+						original_position = ui.position;
 					}
 				});
 				
 				$('.square').droppable({
 					drop: function(event, ui) {
 		            	$.ajax({
-		            		type: 'PATCH',
+		            		type: 'PUT',
+		            		beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
 		            		url: update_url,
-		            		dataType: 'json',
-		            		data: { piece: { x_position: $(this).attr('data-item-x'), y_position: $(this).attr('data-item-y') } }
-		            	})
+		            		dataType: 'html',
+		            		data: { piece: { x_position: $(this).attr('data-item-x'), y_position: $(this).attr('data-item-y') } },
+						    error: function(){				
+				               $(ui.draggable).css({
+				                  'left': original_position.left,
+				                  'top': original_position.top,
+				               }),
+
+				               alert('You cant take your own piece!');
+				           }           	
+		            	});
 		        	}
 				});
 			});
