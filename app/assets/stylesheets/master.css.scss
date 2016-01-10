@@ -79,6 +79,18 @@ body.games.show {
 	border: none;
 }
 
+.gamelist {
+	background: white;
+	color: #333333;
+	padding-bottom: 10px;
+}
+
+.game {
+	background: linear-gradient(rgba(97, 98 ,116 , .05), rgba(97, 98 ,116 , .1));
+	font-size: 18px;
+	padding: 5px 0px;
+}
+
 footer {
 	color: white;
 	padding:5px 0px;

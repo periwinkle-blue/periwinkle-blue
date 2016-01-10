@@ -2,8 +2,7 @@ PeriwinkleBlue::Application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "oauth_callback" }
   root 'static_pages#index'
 
-  resources :games, :except => [:update, :patch]
-
+  resources :games
 
   patch '/games/:game_id/:piece_id', to: 'pieces#update', :as => 'game_piece'
   # The priority is based upon order of creation: first created -> highest priority.
