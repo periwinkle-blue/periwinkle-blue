@@ -3,18 +3,33 @@
 		<h1>Periwinkle Blue </h1>
 		<br />
 		<h3>The ultimate Chess Experience <br />
-			<%= link_to 'Sign Up', new_user_registration_path, :class => "herolink" %> or <%= link_to 'Sign In', new_user_session_path, :class => "herolink" %> to get started!!
-		</h3>
-		<div class="row">
-			<div class="col-xs-6">
-				<h4>Create a profile<br />
-				Play against other users<h4> <br />
-				<%= link_to 'Sign Up', new_user_registration_path, :class => 'btn btn-default' %>
-			</div>
-			<div class="col-xs-6">
-				<h4>Sign into existing profile</h4><br /><br />
-				<%= link_to 'Sign In', new_user_session_path, :class => 'btn btn-default'%>
-			</div>
-		</div>
+			<% if user_signed_in? %> 
+				<br />
+				Welcome back!<br />
+				<%= link_to 'Create', "", :class => "herolink" %> or <%= link_to 'Join a Game', "", :class => "herolink" %> to get started!
+				</h3>
+				<div class="row">
+					<div class="col-xs-6">
+						<%= link_to 'Create a Game', {:action => "create", :controller => "games"}, :method => :post, :class => 'btn btn-default' %>
+					</div>
+					<div class="col-xs-6">
+						<%= link_to 'Join a Game', games_path, :class => 'btn btn-default'%>
+					</div>
+				</div>
+			<% else %>
+				<%= link_to 'Sign Up', new_user_registration_path, :class => "herolink" %> or <%= link_to 'Sign In', new_user_session_path, :class => "herolink" %> to get started!
+				</h3>
+				<div class="row">
+					<div class="col-xs-6">
+						<h4>Create a profile<br />
+						Play against other users</h4> <br />
+						<%= link_to 'Sign Up', new_user_registration_path, :class => 'btn btn-default' %>
+					</div>
+					<div class="col-xs-6">
+						<h4>Sign into existing profile</h4><br /><br />
+						<%= link_to 'Sign In', new_user_session_path, :class => 'btn btn-default'%>
+					</div>
+				</div>
+			<% end %>
 	</div>
 </div>
