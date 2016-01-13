@@ -56,20 +56,18 @@
 				<h3>Join</h3>
 			</div>
 		</div>
-		<% @games.each do |game| %>
-			<% if (current_user.id != game.white_player_id) && game.black_player_id.nil? %>
-				<div class="game row">
-					<div class="col-xs-4">
-						<%= game.id %>
-					</div>
-					<div class="col-xs-4">
-						<%= game.white_player_id %> <%= game.black_player_id %>
-					</div>
-					<div class="col-xs-4">
-						<%= link_to "Join", game, :action => "update", :method => :patch, :class => 'btn btn-default btn-sm' %> 
-					</div>
+		<% @open_games.each do |game| %>
+			<div class="game row">
+				<div class="col-xs-4">
+					<%= game.id %>
 				</div>
-			<% end %>
+				<div class="col-xs-4">
+					<%= game.white_player_id %>
+				</div>
+				<div class="col-xs-4">
+					<%= link_to "Join", game, :action => "update", :method => :patch, :class => 'btn btn-default btn-sm' %> 
+				</div>
+			</div>
 		<% end %>
 	</div>
 </div>
