@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  before_action :authenticate_user!
   
   def create
     Game.create( :white_player_id => current_user.id )
@@ -16,6 +16,12 @@ class GamesController < ApplicationController
 
 	def index
     @games = Game.order(:id)
+    @own_games_created = Game.where( white_player_id: current_user.id ).order(:id)
+    #   current_user.id == game.white_player_id
+    @own_games_joined = Game.where( black_player_id: current_user.id ).order(:id)
+    #   current_user.id == game.black_player_id 
+    # @open_games = 
+    #   if (current_user.id != game.white_player_id) && game.black_player_id.nil?
 	end
 
   def show
