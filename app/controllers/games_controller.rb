@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   skip_before_action :verify_authenticity_token
   
   def create
-    Game.create( :white_player_id => current_user.id )
+    status = Game.create( :white_player_id => current_user.id )
     flash[:notice] = "Your game has been created.  While you wait for an opponent, consider joining another open game."
     redirect_to games_path
   end

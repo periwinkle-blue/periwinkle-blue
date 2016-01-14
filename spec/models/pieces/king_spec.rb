@@ -12,10 +12,10 @@ RSpec.describe King, type: :model do
   end
 
   it "it should only allow one move" do
-    expect(@king.valid_move?(3, 2)).to eq(true)
-    expect(@king.valid_move?(3, 4)).to eq(true)
-    expect(@king.valid_move?(2, 3)).to eq(true)
-    expect(@king.valid_move?(4, 3)).to eq(true)
+    expect(@king.valid_move?(6, 2)).to eq(true)
+    expect(@king.valid_move?(5, 4)).to eq(true)
+    expect(@king.valid_move?(7, 3)).to eq(true)
+    expect(@king.valid_move?(7, 4)).to eq(true)
   end
   
   describe "#will_cause_check?" do
@@ -82,29 +82,55 @@ RSpec.describe King, type: :model do
     context "with a threatening king" do
       it "returns true" do
         expect(@king.will_cause_check?(5, 3)).to eq(false)
-        @king = @game.pieces.create( :type => "King", :x_position => 4, :y_position => 3, :color => 0)
+        @opposing_king = @game.pieces.create( :type => "King", :x_position => 4, :y_position => 3, :color => 0)
         expect(@king.will_cause_check?(5, 3)).to eq(true)
       end      
     end
     
     context "with a non-threatening king" do
       it "returns true" do
-        @king = @game.pieces.create( :type => "King", :x_position => 3, :y_position => 5, :color => 0)
+        @opposing_king = @game.pieces.create( :type => "King", :x_position => 3, :y_position => 5, :color => 0)
         expect(@king.will_cause_check?(5, 3)).to eq(false)
       end      
     end
     
-    context "with a threatening pawn" do
+    context "with a threatening white pawn on black king" do
       it "returns true" do
         expect(@king.will_cause_check?(5, 3)).to eq(false)
-        @king = @game.pieces.create( :type => "King", :x_position => 4, :y_position => 3, :color => 0)
+        @pawn = @game.pieces.create( :type => "Pawn", :x_position => 4, :y_position => 2, :color => 0)
         expect(@king.will_cause_check?(5, 3)).to eq(true)
+      end      
+    end
+    
+    context "with a non-threatening white pawn on black king" do
+      it "returns false" do
+        expect(@king.will_cause_check?(5, 3)).to eq(false)
+        @pawn = @game.pieces.create( :type => "Pawn", :x_position => 6, :y_position => 2, :color => 0)
+        expect(@king.will_cause_check?(5, 3)).to eq(false)
+      end      
+    end
+    
+    context "with a threatening black pawn on white king" do
+      it "returns true" do
+        @white_king = @game.pieces.create( :type => "King", :x_position => 2, :y_position => 5, :color => 0)
+        expect(@white_king.will_cause_check?(2, 4)).to eq(false)
+        @pawn = @game.pieces.create( :type => "Pawn", :x_position => 3, :y_position => 3, :color => 1)
+        expect(@white_king.will_cause_check?(2, 4)).to eq(true)
+      end      
+    end
+    
+    context "with a non-threatening black pawn on white king" do
+      it "returns false" do
+        @white_king = @game.pieces.create( :type => "King", :x_position => 2, :y_position => 5, :color => 0)
+        expect(@white_king.will_cause_check?(2, 4)).to eq(false)
+        @pawn = @game.pieces.create( :type => "Pawn", :x_position => 1, :y_position => 3, :color => 1)
+        expect(@white_king.will_cause_check?(2, 4)).to eq(false)
       end      
     end
     
     context "with a non-threatening pawn" do
       it "returns true" do
-        @king = @game.pieces.create( :type => "King", :x_position => 3, :y_position => 5, :color => 0)
+        @pawn = @game.pieces.create( :type => "Pawn", :x_position => 3, :y_position => 5, :color => 0)
         expect(@king.will_cause_check?(5, 3)).to eq(false)
       end      
     end

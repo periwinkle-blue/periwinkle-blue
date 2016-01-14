@@ -15,7 +15,7 @@ class Bishop < Piece
   end
   
   def valid_capture?(x, y)
-    return self.valid_move? (x, y)
+    return self.valid_move?(x, y)
   end
   
 end

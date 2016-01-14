@@ -16,7 +16,7 @@ class Game < ActiveRecord::Base
   end
   
   def get_active_opposing_pieces(color)
-    opposing_color = color ? 0 : 1
+    opposing_color = (color == 1) ? 0 : 1
     self.pieces.where(:color => opposing_color).to_a
   end
   

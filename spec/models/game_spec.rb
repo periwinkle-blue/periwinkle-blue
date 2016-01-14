@@ -25,13 +25,6 @@ RSpec.describe Game, type: :model do
   end
   
   describe "#will_cause_check?" do
-    context "with a threatening rook" do
-      it "returns true" do
-        expects(@king.will_cause_check?(6, 4)).to eq(false)
-        @rook = @game.pieces.create( :type => "Rook", :x_position => 2, :y_position => 4, :color => 0)
-        expects(@king.will_cause_check?(6, 4)).to eq(true)
-      end
-    end
     
     context "with a non-threatening rook" do
       it "returns false" do
