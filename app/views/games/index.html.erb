@@ -65,7 +65,7 @@
 					<%= game.white_player_id %>
 				</div>
 				<div class="col-xs-4">
-					<%= link_to "Join", game, :action => "update", :method => :patch, :class => 'btn btn-default btn-sm' %> 
+					<%= link_to "Join", join_game_path(game.id), :method => :patch, :class => 'btn btn-default btn-sm' %> 
 				</div>
 			</div>
 		<% end %>

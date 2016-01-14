@@ -7,7 +7,7 @@ class GamesController < ApplicationController
     redirect_to games_path
   end
 
-  def update
+  def join
     @game = Game.find_by_id(params[:id])
     @game.update_attributes( :black_player_id => current_user.id )
     flash[:notice] = "You've joined the game!"
