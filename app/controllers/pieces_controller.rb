@@ -1,8 +1,8 @@
 class PiecesController < ApplicationController
 
 	def update		
-		current_piece.move_to(piece_params)
-		render :text => 'Success'	
+		current_piece.move_to(params[:x_position], params[:y_position])
+		render :text => 'Success'
 	end
 
 	private

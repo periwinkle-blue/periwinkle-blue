@@ -15,18 +15,17 @@ class Piece < ActiveRecord::Base
 		end
 	end
 
-	def move_to(piece_params)
-	  target_piece = game.pieces.where(piece_params).first
+	def move_to(x,y)
+	  target_piece = game.pieces.where(:x_position => x, :y_position => y).first
 	  if target_piece != nil and target_piece.color == self.color
 	  	raise "error"
 	  elsif target_piece !=nil and target_piece.color != self.color
 	  	target_piece.destroy
-	    update_attributes(piece_params) 
-	    
+	    updated_status = update_attributes(:x_position => x, :y_position => y, :moved => true) 
 	  else
-	  	update_attributes(piece_params)
+	  	update_attributes(:x_position => x, :y_position => y, :moved => true)
 	  end
-      #updated_status = update_attributes(x_position: x, y_position: y, :moved => true)
+     
 	end
 
     def valid_move?(x, y)

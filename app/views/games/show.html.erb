@@ -65,14 +65,16 @@
 				$('.piece').draggable({ 
 					containment: "#board",
 					snap: ".square",
-					snapTolerance: 25,
 					 start: function( event, ui ) {
 						original_position = ui.position;
 					}
 				});
 				
 				$('.square').droppable({
+					hoverClass: "highlighted",
 					drop: function(event, ui) {
+
+
 		            	$.ajax({
 		            		type: 'PUT',
 		            		beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
@@ -86,7 +88,10 @@
 				               }),
 
 				               alert('You cant take your own piece!');
-				           }           	
+				           	},
+				           	success: function(){
+				            	window.location.reload();
+				            }            	
 		            	});
 		        	}
 				});
