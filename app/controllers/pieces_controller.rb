@@ -1,12 +1,8 @@
 class PiecesController < ApplicationController
 
-	skip_before_action :verify_authenticity_token
-
-	def update
-		@game = Game.find_by_id(params[:game_id])
-		current_piece.update_attributes(piece_params)
+	def update		
+		current_piece.move_to(params[:x_position], params[:y_position])
 		render :text => 'Success'
-		
 	end
 
 	private
