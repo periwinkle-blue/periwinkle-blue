@@ -52,4 +52,19 @@ class Game < ActiveRecord::Base
     self.pieces.delete_all
   end
   
+  # Switch turns to the opposing user
+  def update_turn
+    puts "UPDATING TURN!"
+    self.turn == self.white_player_id ? self.turn = self.black_player_id : self.turn = self.white_player_id
+    self.save
+  end
+  
+  def get_current_turn_message(user_id)
+    if user_id == self.turn
+      message = "Your turn!"
+    else
+      message = "Waiting on #{User.find(self.turn).email}"
+    end
+  end
+  
 end

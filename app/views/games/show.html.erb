@@ -3,9 +3,11 @@
 
 <div id="container" class="clear">
 	<div id="games-left-column">
-		<div id="user1-turn" class="circle">HIDE?</div>
+      <div id="user1-turn" class="circle <%= "turn" if @game.turn == @game.white_player_id%>">
+        <%= @game.turn == @game.white_player_id ? "TURN" : "" %>
+      </div>
 		<div class="user1-info">
-			<div class="text-center">User 1</div>
+          <div class="text-center"><%= @game.white_player.email %> (White) </div>
 			<div>
 				<div class="pull-left">
 					Wins: 5
@@ -16,7 +18,7 @@
 					IMAGE
 				</div>
 			</div>
-			<div class="clear text-center">Waiting on User 2</div>
+            <div class="clear text-center"><%= @game.get_current_turn_message(@game.white_player_id) %></div>
 		</div>
 		<div class="text-center">
 			<br>
@@ -56,6 +58,12 @@
 		<script>
 			update_url = undefined; 
 			$(function() {
+              revertFlag = false;
+              origTop = 0;
+              origTopOffset = 0;
+              origLeft = 0;
+              origLeftOffset = 0;
+              
 				$('.piece').on ("mousedown", function() {
 					update_url= $(this).attr('data-update-url');
 				});
@@ -64,18 +72,28 @@
 					containment: "#board",
 					snap: ".square",
 					snapTolerance: 25,
-					 stop: function( event, ui ) {
-						
-					}
+                    start: function(event, ui) {
+                      origTop = $(this).position().top;
+                      origTopOffset = $(this).offset().top;
+                      origLeft = $(this).position().left;
+                      origLeftOffset = $(this).offset().left;
+                    }
 				});
 				
 				$('.square').droppable({
 					drop: function(event, ui) {
 		            	$.ajax({
-		            		type: 'PATCH',
+		            		type: 'PUT',
 		            		url: update_url,
 		            		dataType: 'json',
 		            		data: { piece: { x_position: $(this).attr('data-item-x'), y_position: $(this).attr('data-item-y') } }
+                        }).done(function(response) {
+                          console.log("In Ajax Response");
+                          if (response.status == "success") {
+                            window.location.reload();
+                          } else {
+                            return ui.draggable.animate( {left: origLeft - origLeftOffset , top: origTop - origTopOffset}, 500);
+                          }
 		            	})
 		        	}
 				});
@@ -100,9 +118,11 @@
 	</div>
 
 	<div id="games-right-column">
-		<div id="user2-turn" class="circle">TURN</div>
+        <div id="user2-turn" class="circle <%= "turn" if @game.turn == @game.black_player_id%>">
+          <%= @game.turn == @game.black_player_id ? "TURN" : "" %>
+        </div>
 		<div class="user2-info">
-			<div class="text-center">User 2</div>
+            <div class="text-center"><%= @game.black_player.email %> (Black) </div>
 			<div>
 				<div class="pull-left">
 					Wins: 1
@@ -113,7 +133,7 @@
 					IMAGE
 				</div>
 			</div>
-			<div class="clear text-center">Waiting on User 2</div>
+            <div class="clear text-center"><%= @game.get_current_turn_message(@game.black_player_id) %></div>
 		</div>
 		<div class="text-center">
 			<br>
