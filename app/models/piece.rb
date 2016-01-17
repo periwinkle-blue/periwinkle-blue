@@ -16,7 +16,16 @@ class Piece < ActiveRecord::Base
 	end
 
 	def move_to(x,y)
-      updated_status = update_attributes(x_position: x, y_position: y, :moved => true)
+	  target_piece = game.pieces.where(:x_position => x.to_i, :y_position => y.to_i).first
+	  if target_piece != nil and target_piece.color == self.color
+	  	raise "error"
+	  elsif target_piece !=nil and target_piece.color != self.color
+	  	target_piece.destroy
+	    update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true) 
+	  else
+	  	update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
+	  end
+     
 	end
 
     def valid_move?(x, y)

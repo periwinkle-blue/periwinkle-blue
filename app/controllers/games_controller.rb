@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
-  
+
   def create
     Game.create( :white_player_id => current_user.id )
     flash[:notice] = "Your game has been created.  While you wait for an opponent, consider joining another open game."
@@ -13,6 +13,7 @@ class GamesController < ApplicationController
     flash[:notice] = "You've joined the game!"
     redirect_to game_path(@game)
   end
+
 
 	def index
     @own_games_created = Game.where( white_player_id: current_user.id ).order(:id)
