@@ -4,6 +4,7 @@ body.static_pages.index header {
 
 body.games.show {
   background: white;
+  width: 1000px; /* remove once final game elements are in place and properly classed */
 }
 
 .btn {
@@ -52,24 +53,8 @@ body.games.show {
 	color: white;
 }
 
-.theking div {
-	padding-top: 50px;
-}
-
 .theking h1 {
 	font-size: 48px;
-}
-
-.theking a {
-	color: white;
-}
-
-.theking .field {
-	padding: 10px 0px;
-}
-
-.theking .actions {
-	color: #333333;
 }
 
 .navbar {

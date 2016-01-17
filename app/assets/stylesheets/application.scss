@@ -24,7 +24,6 @@ $blue-background: #073763;
 
 body {
   margin: 0 auto;
-  width: 1000px;
   background-color: $blue-background;
 }
 
@@ -49,6 +48,10 @@ footer {
   color: #fff;
   float: left;
   font: 30px arial, sans-serif;
+}
+
+#header-left a {
+  text-decoration: none;
 }
 
 #header-right {
