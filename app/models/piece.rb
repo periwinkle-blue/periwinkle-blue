@@ -18,6 +18,8 @@ class Piece < ActiveRecord::Base
 	def move_to(x,y)
 	  target_piece = game.pieces.where(:x_position => x.to_i, :y_position => y.to_i).first
 	  if target_piece != nil and target_piece.color == self.color
+        # This could possibly be updated to 'return false'. This will let us return the status of
+        # this operation to the controller
 	  	raise "error"
 	  elsif target_piece !=nil and target_piece.color != self.color
 	  	target_piece.destroy
@@ -25,6 +27,8 @@ class Piece < ActiveRecord::Base
 	  else
 	  	update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
 	  end
+      
+      # Maybe add return true, if there were no errors
      
 	end
 

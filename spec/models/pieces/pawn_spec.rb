@@ -5,7 +5,7 @@ RSpec.describe Pawn, type: :model do
   before do
     @game = Game.create()
     @game.clear_board!
-    @pawn = Pawn.create( :color => 0, :x_position => 3, :y_position => 4, :game => @game)
+    @pawn = Pawn.create( :color => 1, :x_position => 3, :y_position => 4, :game => @game)
   end
   
   it "should allow one move forward" do
@@ -27,23 +27,15 @@ RSpec.describe Pawn, type: :model do
   end
   
   it "can move diagonally left when capturing a piece diagonal to it" do
-    expect(@pawn.valid_move?(2,3)).to eq(false)
-    @piece = Piece.create(:color => 1, :x_position => 2, :y_position => 3, :game => @game)
+    @piece = Piece.create(:color => 0, :x_position => 2, :y_position => 3, :game => @game)
     expect(@pawn.valid_move?(2,3)).to eq(true)
   end
   
   it "can move diagonally right when capturing a piece diagonal to it" do
-    expect(@pawn.valid_move?(2,5)).to eq(false)
-    @piece = Piece.create(:color => 1, :x_position => 2, :y_position => 5, :game => @game)
+    @piece = Piece.create(:color => 0, :x_position => 2, :y_position => 5, :game => @game)
     expect(@pawn.valid_move?(2,5)).to eq(true)
   end
-  
-  it "cannot move diagonally right when a piece of the same color is diagonal to it" do
-    expect(@pawn.valid_move?(2,5)).to eq(false)
-    @piece = Piece.create(:color => 0, :x_position => 2, :y_position => 5, :game => @game)
-    expect(@pawn.valid_move?(2,5)).to eq(false)
-  end
-  
+    
   it "cannot move backward diagonally, horizontally, or vertically" do
     expect(@pawn.valid_move?(4,4)).to eq(false)
     expect(@pawn.valid_move?(6,4)).to eq(false)

@@ -22,5 +22,9 @@ class Knight < Piece
     (x_move == 2 && y_move == 1) || 
       (x_move == 1 && y_move ==2)
   end
+  
+  def valid_capture?(x, y)
+    return self.valid_move?(x, y)
+  end
 
 end
