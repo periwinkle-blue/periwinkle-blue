@@ -2,9 +2,12 @@ require 'rails_helper'
 require 'piece'
 
 RSpec.describe Game, type: :model do
+  include FactoryGirl::Syntax::Methods
   
   before do
-    @game = Game.create
+    @white_player = create(:user)
+    @black_player = create(:user)
+    @game = Game.create( :white_player => @white_player, :black_player => @black_player, :turn => @white_player.id )
     @game.clear_board!
     
     @king = @game.pieces.create( :x_position => 6, :y_position => 3, :color => 1)
@@ -24,43 +27,22 @@ RSpec.describe Game, type: :model do
     expect(piece).to eq("")
   end
   
-  describe "#will_cause_check?" do
+  describe "#get_current_turn_message" do
     
-    context "with a non-threatening rook" do
-      it "returns false" do
+    context "white player's turn with white player passed in" do
+      it "returns 'Your turn'" do
+        message = @game.get_current_turn_message(@white_player.id)
+        expect(message).to eq("Your turn!")
       end
     end
     
-    context "with a rook of the same color" do
-      it "returns false" do
+    context "white player's turn with black player passed in" do
+      it "returns 'Waiting on other user'" do
+        message = @game.get_current_turn_message(@black_player.id)
+        expect(message).to eq("Waiting on #{@white_player.email}")
       end
     end
-    
-    context "with a threatening pawn" do
-      it "returns true" do
-      end      
-    end
-    
-    context "with a threatening bishop" do
-      it "returns true" do
-      end      
-    end
-    
-    context "with a threatening knight" do
-      it "returns true" do
-      end      
-    end
-    
-    context "with a threatening queen" do
-      it "returns true" do
-      end      
-    end
-    
-    context "with a threatening king" do
-      it "returns true" do
-      end      
-    end
-    
+        
   end
   
 end

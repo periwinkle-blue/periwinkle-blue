@@ -3,9 +3,11 @@
 
 <div id="container" class="clear">
 	<div id="games-left-column">
-		<div id="user1-turn" class="circle">HIDE?</div>
+      <div id="user1-turn" class="circle <%= "turn" if @game.turn == @game.white_player_id%>">
+        <%= @game.turn == @game.white_player_id ? "TURN" : "" %>
+      </div>
 		<div class="user1-info">
-			<div class="text-center">User 1</div>
+          <div class="text-center"><%= @game.white_player.email %> (White) </div>
 			<div>
 				<div class="pull-left">
 					Wins: 5
@@ -16,7 +18,7 @@
 					IMAGE
 				</div>
 			</div>
-			<div class="clear text-center">Waiting on User 2</div>
+            <div class="clear text-center"><%= @game.get_current_turn_message(@game.white_player_id) %></div>
 		</div>
 		<div class="text-center">
 			<br>
@@ -57,6 +59,12 @@
 			update_url = undefined; 
 			var original_position = '';
 			$(function() {
+              revertFlag = false;
+              origTop = 0;
+              origTopOffset = 0;
+              origLeft = 0;
+              origLeftOffset = 0;
+              
 				$('.piece').on ("mousedown", function() {
 					update_url = $(this).attr('data-update-url');
 					
@@ -65,7 +73,7 @@
 				$('.piece').draggable({ 
 					containment: "#board",
 					snap: ".square",
-					 start: function( event, ui ) {
+				    start: function( event, ui ) {
 						original_position = ui.position;
 					}
 				});
@@ -93,6 +101,22 @@
 				            	window.location.reload();
 				            }            	
 		            	});
+//                        COMMENTS...
+//                        I think using .done at the end of the AJAX request may be best. That way we can look at response.status
+//                        (which will be passed back by the controller) to determine what to do based on a "success" vs "error".
+//                        For example...
+//                        $.ajax({}).done(function(response) {
+//                          if (response.status == "success") {
+//                            window.location.reload();
+//                          } else {
+//                            $(ui.draggable).css({
+//				                  'left': original_position.left,
+//				                  'top': original_position.top,
+//				               })
+//                          }
+//		            	  })
+//                        For this to work, you would have to return a json response from the controller, but this gives flexibility
+//                        to send back any "status" or "msg" you want, and then you can use it as needed here.
 		        	}
 				});
 			});
@@ -116,9 +140,11 @@
 	</div>
 
 	<div id="games-right-column">
-		<div id="user2-turn" class="circle">TURN</div>
+        <div id="user2-turn" class="circle <%= "turn" if @game.turn == @game.black_player_id%>">
+          <%= @game.turn == @game.black_player_id ? "TURN" : "" %>
+        </div>
 		<div class="user2-info">
-			<div class="text-center">User 2</div>
+            <div class="text-center"><%= @game.black_player.email %> (Black) </div>
 			<div>
 				<div class="pull-left">
 					Wins: 1
@@ -129,7 +155,7 @@
 					IMAGE
 				</div>
 			</div>
-			<div class="clear text-center">Waiting on User 2</div>
+            <div class="clear text-center"><%= @game.get_current_turn_message(@game.black_player_id) %></div>
 		</div>
 		<div class="text-center">
 			<br>

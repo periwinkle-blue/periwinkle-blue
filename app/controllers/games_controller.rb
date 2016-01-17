@@ -8,17 +8,17 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find_by_id(params[:id])
-    @game.update_attributes( :black_player_id => current_user.id )
+    @game.update_attributes( :black_player_id => current_user.id, :turn => @game.white_player_id )
     flash[:notice] = "You've joined the game!"
     redirect_to game_path(@game)
   end
 
-
-	def index
+  def index
     @games = Game.order(:id)
-	end
+  end
 
   def show
+    puts "In Games#show"
       @game = Game.find_by_id(params[:id])
       
       @board = [
