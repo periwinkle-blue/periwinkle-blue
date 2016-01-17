@@ -13,9 +13,9 @@ class Bishop < Piece
     
     is_valid_diagonal_move?(x, y)
   end
-  
+
   def valid_capture?(x, y)
     return self.valid_move?(x, y)
   end
-  
+
 end

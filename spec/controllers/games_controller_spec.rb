@@ -6,7 +6,7 @@ RSpec.configure do |config|
 end
 
 RSpec.describe GamesController, type: :controller do
-
+  
  	describe "Create a new game when logged in" do
 #		@user = FactoryGirl.create(:user)
       
