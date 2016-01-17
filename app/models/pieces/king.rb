@@ -22,7 +22,6 @@ class King < Piece
     opposing_pieces = self.game.get_active_opposing_pieces(self.color)
     
     opposing_pieces.each do |piece|
-      ans = piece.valid_capture?(x, y)
       return true if piece.valid_capture?(x, y)
     end
     
