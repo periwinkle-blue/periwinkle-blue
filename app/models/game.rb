@@ -15,6 +15,11 @@ class Game < ActiveRecord::Base
     return self.pieces.where( :x_position => x, :y_position => y).first
   end
   
+  def get_active_opposing_pieces(color)
+    opposing_color = (color == 1) ? 0 : 1
+    self.pieces.where(:color => opposing_color).to_a
+  end
+  
   # Initialze board with 16 chess pieces to start the game
   def initialize_board
     

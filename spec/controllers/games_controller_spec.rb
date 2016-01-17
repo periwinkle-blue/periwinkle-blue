@@ -8,12 +8,15 @@ end
 RSpec.describe GamesController, type: :controller do
 
  	describe "Create a new game when logged in" do
-		user = FactoryGirl.create(:user)
-		before(:each) do
-			sign_in user
+#		@user = FactoryGirl.create(:user)
+      
+        before(:each) do
+          #puts "Users: #{User.select(:email).to_a}"
+          user = FactoryGirl.create(:user)
+		  sign_in user
 		end
-
-		it "creates a new game" do	
+      
+		it "creates a new game" do
 			expect{get :create}.to change{Game.count}.by(1)
 		end
 
@@ -24,9 +27,10 @@ RSpec.describe GamesController, type: :controller do
  	end
 
  	describe "View games and join an open one" do 
- 		user = FactoryGirl.create(:user)
+# 		user = FactoryGirl.create(:user)
  		
  		before(:each) do
+ 		    user = FactoryGirl.create(:user)          
 			sign_in user
 		end
  		
