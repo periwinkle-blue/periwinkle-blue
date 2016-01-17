@@ -10,7 +10,9 @@
 <body class="<%= "#{controller.controller_name} #{controller.action_name}" %>">
   <header>
     <div class="navbar">
-      <div id="header-left" class="col-xs-6">Periwinkle Blue</div>
+      <div id="header-left" class="col-xs-6">
+        <%= link_to 'Periwinkle Blue', root_path %>
+      </div>
       <div id="header-right" class="col-xs-6">
         <% if user_signed_in? %>
           <%= link_to 'View Games', games_path, :class => 'btn btn-default' %>
@@ -29,6 +31,7 @@
   <% if alert.present? %>
     <p class="alert alert-danger"><%= alert %></p>
   <% end %>
+  <script>$( ".alert" ).fadeOut(7000);</script>
 
   <%= yield %>
 

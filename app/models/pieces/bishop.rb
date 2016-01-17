@@ -5,8 +5,13 @@ class Bishop < Piece
     self.moved = false
     self.icon = (self.color == 1) ? "&#9821;" : "&#9815;"
   end
-
-  def valid_move?(x,y)
-  	return false unless ((x_position - x) / (y_position - y)) == 1 or -1
+  
+  def valid_move?(x, y)
+    # Valid parameters passed in?
+    valid_params = super
+    return false unless valid_params
+    
+    is_valid_diagonal_move?(x, y)
   end
+
 end
