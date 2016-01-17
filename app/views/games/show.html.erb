@@ -1,3 +1,6 @@
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 <div id="container" class="clear">
 	<div id="games-left-column">
 		<div id="user1-turn" class="circle">HIDE?</div>
@@ -50,6 +53,52 @@
 			</div>
 		</div>
 
+		<script>
+			update_url = undefined; 
+			var original_position = '';
+			$(function() {
+				$('.piece').on ("mousedown", function() {
+					update_url = $(this).attr('data-update-url');
+					
+				});
+
+				$('.piece').draggable({ 
+					containment: "#board",
+					snap: ".square",
+					 start: function( event, ui ) {
+						original_position = ui.position;
+					}
+				});
+				
+				$('.square').droppable({
+					hoverClass: "highlighted",
+					drop: function(event, ui) {
+
+
+		            	$.ajax({
+		            		type: 'PUT',
+		            		beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+		            		url: update_url,
+		            		dataType: 'html',
+		            		data: { piece: { x_position: $(this).attr('data-item-x'), y_position: $(this).attr('data-item-y') } },
+						    error: function(){				
+				               $(ui.draggable).css({
+				                  'left': original_position.left,
+				                  'top': original_position.top,
+				               }),
+
+				               alert('You cant take your own piece!');
+				           	},
+				           	success: function(){
+				            	window.location.reload();
+				            }            	
+		            	});
+		        	}
+				});
+			});
+		</script>
+
+
 		<div id="board">
 			<%= render "draw_pieces"%>
 		</div>
@@ -58,7 +107,11 @@
 	      <div class="col-xs-10 col-xs-offset-1 alert alert-danger">
 	        <%= flash[:error] %>
 	      </div>
-   		 <% end %>
+	    <% elsif flash[:notice].present? %>
+	    <div class="col-xs-10 col-xs-offset-1 alert alert-danger">
+	        <%= flash[:notice] %>
+	      </div>
+   		<% end %>
    		 
 	</div>
 

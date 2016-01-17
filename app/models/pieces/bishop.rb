@@ -13,4 +13,5 @@ class Bishop < Piece
     
     is_valid_diagonal_move?(x, y)
   end
+
 end
