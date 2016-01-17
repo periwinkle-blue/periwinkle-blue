@@ -43,8 +43,10 @@ gem 'omniauth-facebook'
 # Add figaro for key storage
 gem "figaro", ">= 1.0.0"
 
+
 # Add Factory Girl for testing
 gem "factory_girl_rails", "~> 4.0"
+
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -55,6 +57,8 @@ group :development do
 	gem 'rubocop'
 	gem 'pry'
 	gem 'pry-byebug'
+	gem 'rack-mini-profiler'
+	gem 'puma' 
 end
 
 group :development, :test do

@@ -16,7 +16,16 @@ class Piece < ActiveRecord::Base
 	end
 
 	def move_to(x,y)
-      updated_status = update_attributes(x_position: x, y_position: y, :moved => true)
+	  target_piece = game.pieces.where(:x_position => x.to_i, :y_position => y.to_i).first
+	  if target_piece != nil and target_piece.color == self.color
+	  	raise "error"
+	  elsif target_piece !=nil and target_piece.color != self.color
+	  	target_piece.destroy
+	    update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
+	  else
+	  	update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
+	  end
+
 	end
 
   def valid_move?(x, y)
@@ -30,6 +39,23 @@ class Piece < ActiveRecord::Base
   def params_out_of_bounds?(x, y)
     return true if x < 0 || y < 0 || x > 7 || y > 7
   end
+
+
+    def is_valid_diagonal_move?(x, y)
+      x_diff = (self.x_position - x).abs
+      y_diff = (self.y_position - y).abs
+
+      x_diff == y_diff and !self.is_obstructed?(x,y)
+    end
+
+    def is_valid_horizontal_or_vertical_move?(x, y)
+      (self.x_position == x or self.y_position == y) and !self.is_obstructed?(x,y)
+    end
+
+    def params_out_of_bounds?(x, y)
+      return true if x < 0 || y < 0 || x > 7 || y > 7
+    end
+
 
 	def is_obstructed_diagonally?(x,y)
 		range = (y_position - y).abs - 1

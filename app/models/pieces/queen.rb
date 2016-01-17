@@ -11,31 +11,12 @@ class Queen < Piece
     valid_params = super
     return false unless valid_params
     
-    return true if is_valid_diagonal_move?(x, y)
-    return true if is_valid_horizontal_or_vertical_move?(x, y)
-
-    false
+    is_valid_diagonal_move?(x, y) || 
+      is_valid_horizontal_or_vertical_move?(x, y) 
   end
   
-  def is_valid_diagonal_move?(x, y)
-    x_diff = (self.x_position - x).abs
-    y_diff = (self.y_position - y).abs
-    
-    if x_diff == y_diff and !self.is_obstructed?(x,y)
-      return true
-    else
-      return false
-    end
+  def valid_capture?(x, y)
+    return self.valid_move?(x, y)
   end
   
-  def is_valid_horizontal_or_vertical_move?(x, y)
-    x_diff = (self.x_position - x).abs
-    y_diff = (self.y_position - y).abs
-    
-    if x_diff * y_diff == 0 and !self.is_obstructed?(x,y)
-      return true
-    else
-    end
-  end
-
 end
