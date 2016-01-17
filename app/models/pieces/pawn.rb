@@ -12,17 +12,15 @@ class Pawn < Piece
     valid_params = super
     return false unless valid_params
     
-    return true if is_valid_two_space_move?(x,y) || 
-                   is_valid_one_space_move?(x,y) || 
-                   is_valid_diagonal_capture?(x,y)
-    
-    return false
+    is_valid_two_square_move?(x,y) || 
+    is_valid_one_square_move?(x,y) || 
+      is_valid_diagonal_capture?(x,y)
     
   end
   
   private
   
-  def is_valid_two_space_move?(x, y)
+  def is_valid_two_square_move?(x, y)
     x_diff = self.x_position - x
     y_diff = self.y_position - y
     
@@ -33,7 +31,7 @@ class Pawn < Piece
     return false
   end
   
-  def is_valid_one_space_move?(x, y)
+  def is_valid_one_square_move?(x, y)
     x_diff = self.x_position - x
     y_diff = self.y_position - y
     

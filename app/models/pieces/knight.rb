@@ -7,15 +7,20 @@ class Knight < Piece
   end
 
   def valid_move?(x, y)
+    # Valid parameters passed in?
+    valid_params = super
+    return false unless valid_params
+    
+    is_valid_move_combination?(x, y)
+  end
+
+  def is_valid_move_combination?(x, y)
     # Calculate old move and new move
     x_move = (x_position - x).abs
     y_move = (y_position - y).abs
 
-    return valid_move_combination?(x_move, y_move)
-  end
-
-  def valid_move_combination?(x_move, y_move)
-    return (x_move == 2 && y_move == 1) || (x_move == 1 && y_move ==2) ? true : false
+    (x_move == 2 && y_move == 1) || 
+      (x_move == 1 && y_move ==2)
   end
 
 end
