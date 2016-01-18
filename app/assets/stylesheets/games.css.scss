@@ -64,7 +64,7 @@ $column-id-margin: 10px auto 20px;
     font-style: italic;
     position: relative;
     border-radius: 100%;
-    background: #274e13;
+    background: #FFF;
     border: 1px solid #F7F7F7;
     width: 50px;
     height: 50px;
@@ -74,6 +74,10 @@ $column-id-margin: 10px auto 20px;
     font-size: 10px;
     line-height: 50px;
     cursor: pointer;
+}
+
+.circle.turn {
+  background: #274e13;
 }
 
 .user1-info {
