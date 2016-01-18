@@ -15,8 +15,8 @@ class GamesController < ApplicationController
   end
 
 	def index
-    @own_games_created = Game.where( white_player_id: current_user.id ).order(:id)
-    @own_games_joined = Game.where( black_player_id: current_user.id ).order(:id)
+    @own_playable_games = Game.where.not( black_player_id: nil ).where( "white_player_id = ? OR black_player_id = ?", current_user.id, current_user.id ).order(:id)
+    @own_open_games = Game.where( white_player_id: current_user.id ).where( black_player_id: nil ).order(:id)
     @open_games = Game.where.not( white_player_id: current_user.id ).where( black_player_id: nil ).order(:id)
 	end
 

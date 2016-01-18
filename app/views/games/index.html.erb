@@ -14,20 +14,24 @@
 				<h3>Status</h3>
 			</div>
 		</div>
-		<% @own_games_joined.each do |game| %>
+		<% @own_playable_games.each do |game| %>
 			<div class="game row">
 					<div class="col-xs-4">
 						<%= game.id %>
 					</div>
 					<div class="col-xs-4">
-						<%= game.white_player_id %>
+						<% if game.white_player_id == current_user.id %>
+							<%= game.black_player_id %>
+						<% else %>
+							<%= game.white_player_id %>
+						<% end %>
 					</div>
 					<div class="col-xs-4">
 						<%= link_to "Play Now", game, :class => 'btn btn-default btn-sm' %> 
 					</div>
 				</div>
 		<% end %>
-		<% @own_games_created.each do |game| %>
+		<% @own_open_games.each do |game| %>
 			<div class="game row">
 					<div class="col-xs-4">
 						<%= game.id %>
