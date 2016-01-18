@@ -1,5 +1,4 @@
 class Game < ActiveRecord::Base
-  require 'piece'
   after_create :initialize_board
 
   has_many :pieces
@@ -15,16 +14,12 @@ class Game < ActiveRecord::Base
   def piece_on(x,y)
     return self.pieces.where( :x_position => x, :y_position => y).first
   end
-<<<<<<< HEAD
 
-=======
-  
   def get_active_opposing_pieces(color)
     opposing_color = (color == 1) ? 0 : 1
     self.pieces.where(:color => opposing_color).to_a
   end
-  
->>>>>>> master
+
   # Initialze board with 16 chess pieces to start the game
   def initialize_board
 
@@ -57,67 +52,29 @@ class Game < ActiveRecord::Base
     self.pieces.delete_all
   end
 
-  # Loop through board to check pieces for valid moves
   def king_in_check?
-    piece = Piece.new
-
-    for x in 0..7
-      for y in 0..7
-        # Check for piece in database
-        piece = self.pieces.where(:x_position => x, :y_position => y).first
-
-        if !piece.nil?
-          for position in 0..7
-            # Check piece in position for valid moves
-            check_king_horizontal = piece_on(x, position)
-            check_king_vertical = piece_on(position, y)
-            check_king_top_left = piece_on(x - position, y - position)
-            check_king_top_right = piece_on(x - position, y + position)
-            check_king_bottom_left = piece_on(x + position, y - position)
-            check_king_bottom_right = piece_on(x + position, y + position)
-
-            if piece.valid_move?(x, position) ||
-               piece.valid_move?(position, y) ||
-               piece.valid_move?(x - position, y - position) ||
-               piece.valid_move?(x - position, y + position) ||
-               piece.valid_move?(x + position, y - position) ||
-               piece.valid_move?(x + position, y + position)
-
-              # If position is not nil, check to see if its the opposite king
-              if !check_king_horizontal.nil?
-                return true if check_king_horizontal.type == "King" &&
-                        check_king_horizontal.color != piece.color
-
-              elsif !check_king_vertical.nil?
-                return true if check_king_vertical.type == "King" &&
-                        check_king_vertical.color != piece.color
-
-              elsif !check_king_top_left.nil?
-                return true if check_king_top_left.type == "King" &&
-                        check_king_top_left.color != piece.color
-
-              elsif !check_king_top_right.nil?
-                return true if check_king_top_right.type == "King" &&
-                        check_king_top_right.color != piece.color
-
-              elsif !check_king_bottom_left.nil?
-                return true if check_king_bottom_left.type == "King" &&
-                        check_king_bottom_left.color != piece.color
-
-              elsif !check_king_bottom_right.nil?
-                return true if check_king_bottom_right.type == "King" &&
-                        check_king_bottom_right.color != piece.color
-
-              elsif position == 7
-                return false
-              end
+    # Get pieces from database
+    pieces.find_each do |piece|
+      # Loop through positions on board to verify valid moves
+      for x in 0..7
+        for y in 0..7
+          # Check to see if target position is valid
+          if piece.valid_move?(x, y)
+            # Check piece on position
+            king_check = piece_on(x, y)
+            # Piece on position was not nil, is a king, and is opposite color from original piece
+            if !king_check.nil? && king_check.type == "King" && king_check.color != piece.color
+              # Better move your king
+              return true
             end
           end
+
         end
-
       end
-    end
 
-	end # king_in_check?
+    end
+    # King is all good
+    return false
+  end
 
 end
