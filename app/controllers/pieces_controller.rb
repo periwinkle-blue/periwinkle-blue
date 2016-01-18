@@ -4,7 +4,6 @@ class PiecesController < ApplicationController
   
   skip_before_action :verify_authenticity_token
 
-<<<<<<< HEAD
 	def update		
         # We may want to return a boolean from 'move_to'. If there was an error captured ther, we should not update turn
 		status = current_piece.move_to(params[:piece][:x_position], params[:piece][:y_position])
