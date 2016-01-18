@@ -24,14 +24,6 @@
     </div>
   </header>
 
-  <% if notice.present? %>
-    <p class="alert alert-info"><%= notice %></p>
-  <% end %>
-  <% if alert.present? %>
-    <p class="alert alert-danger"><%= alert %></p>
-  <% end %>
-  <script>$( ".alert" ).fadeOut(7000);</script>
-
   <%= yield %>
 
   <footer>
@@ -47,6 +39,6 @@
       </div>
     </div>
   </footer>
-  
+
 </body>
 </html>
