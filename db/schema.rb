@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20160115180500) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "game_id"
+    t.string   "name"
     t.string   "icon"
     t.boolean  "moved"
   end
