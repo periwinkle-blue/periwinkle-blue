@@ -22,13 +22,6 @@
         </div>
   </header>
 
-  <% if notice.present? %>
-    <p class="alert alert-info"><%= notice %></p>
-  <% end %>
-  <% if alert.present? %>
-    <p class="alert alert-danger"><%= alert %></p>
-  <% end %>
-
   <%= yield %>
 
   <footer>
@@ -44,6 +37,6 @@
       </div>
     </div>
   </footer>
-  
+
 </body>
 </html>
