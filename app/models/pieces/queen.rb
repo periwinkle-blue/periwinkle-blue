@@ -15,4 +15,8 @@ class Queen < Piece
       is_valid_horizontal_or_vertical_move?(x, y) 
   end
   
+  def valid_capture?(x, y)
+    return self.valid_move?(x, y)
+  end
+  
 end

@@ -15,6 +15,11 @@ class Game < ActiveRecord::Base
     return self.pieces.where( :x_position => x, :y_position => y).first
   end
   
+  def get_active_opposing_pieces(color)
+    opposing_color = (color == 1) ? 0 : 1
+    self.pieces.where(:color => opposing_color).to_a
+  end
+  
   # Initialze board with 16 chess pieces to start the game
   def initialize_board
     
@@ -45,6 +50,21 @@ class Game < ActiveRecord::Base
   # For testing
   def clear_board!
     self.pieces.delete_all
+  end
+  
+  # Switch turns to the opposing user
+  def update_turn
+    puts "UPDATING TURN!"
+    self.turn == self.white_player_id ? self.turn = self.black_player_id : self.turn = self.white_player_id
+    self.save
+  end
+  
+  def get_current_turn_message(user_id)
+    if user_id == self.turn
+      message = "Your turn!"
+    else
+      message = "Waiting on #{User.find(self.turn).email}"
+    end
   end
   
 end
