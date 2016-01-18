@@ -3,54 +3,68 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 $board-size: 482px;
 $border-style: 1px solid #000;
+$column-id-margin: 10px auto;
 $cell-size: 60px;
-$column-id-margin: 10px auto 20px;
+$mobile-cell-size: 40px;
+$mobile-board-size: 322px;
+$mobile-border-style: 1px solid #000;
+
+#games-container {
+  background: white;
+}
 
 #board {
   border: $border-style;
   height: $board-size;
-  margin: auto;
+  margin: $column-id-margin;
   width: $board-size;
 }
 
 #games-center-column {
-  float: left;
-  margin: $column-id-margin;
-  width: 50%;
+  /*float: left;*/
+  /*margin: $column-id-margin;*/
+  /*width: 50%;*/
 }
 
 #games-left-column {
-  float: left;
+  /*float: left;*/
   margin: $column-id-margin;
-  width: 25%;
+/*  width: 25%;*/
 }
 
-#games-right-column {
+/*#games-right-column {
   float: right;
   margin: $column-id-margin;
   width: 25%;
-}
+}*/
 
 #score-board {
   background-color: #808080;
   border: $border-style;
   color: #fff;
   height: 50px;
-  margin: 0 auto 20px;
+  margin: $column-id-margin;
   padding:5px;
-  width: $board-size;
+  /*width: $board-size;*/
 }
 
-#user1-turn {
+/*#user1-turn {
     margin: 0 auto 10px;
 }
 
 #user2-turn {
     margin: 0 auto 10px;
-}
+}*/
 
 .brown-cell {
   background-color: #a17351;
+}
+
+.white-cell {
+  background-color: #fff;
+}
+
+.square {
   float: left;
   height: $cell-size;
   width: $cell-size;
@@ -59,25 +73,21 @@ $column-id-margin: 10px auto 20px;
   font-size: 40px;
 }
 
-.circle {
-    font-weight: bold;
-    font-style: italic;
-    position: relative;
-    border-radius: 100%;
-    background: #FFF;
-    border: 1px solid #F7F7F7;
-    width: 50px;
-    height: 50px;
-    margin: 10px 10px;
-    text-align: center;
-    color: #FFF;
-    font-size: 10px;
-    line-height: 50px;
-    cursor: pointer;
-}
-
-.circle.turn {
+.turn {
+  font-weight: bold;
+  font-style: italic;
+  position: relative;
+  border-radius: 100%;
   background: #274e13;
+  border: 1px solid #F7F7F7;
+  width: 50px;
+  height: 50px;
+  margin: 0px 10px;
+  text-align: center;
+  color: #FFF;
+  font-size: 10px;
+  line-height: 50px;
+  cursor: pointer;
 }
 
 .user1-info {
@@ -96,16 +106,6 @@ $column-id-margin: 10px auto 20px;
   padding: 5px;
 }
 
-.white-cell {
-  background-color: #fff;
-  float: left;
-  height: $cell-size;
-  width: $cell-size;
-  text-align: center;
-  line-height: $cell-size;
-  font-size: 40px;
-}
-
 .icon {
   font-size: 45px;
 }
@@ -120,10 +120,35 @@ a {
 }
 
 .draggable { 
-  width: 60px; height: 60px; float: left; font-size: .9em; 
+  width: $cell-size;
+  height: $cell-size;
+  float: left; 
+  font-size: .9em; 
 }
 
-.square {
+@media (max-width: 480px) {
+  #board {
+    border: $mobile-border-style;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    height: $mobile-board-size;
+    margin: auto;
+    width: $mobile-board-size;
+  }
+  .square {
+    height: $mobile-cell-size;
+    width: $mobile-cell-size;
+    line-height: $mobile-cell-size;
+    font-size: 25px;
+  }
 
+  .draggable { 
+    width: $mobile-cell-size;
+    height: $mobile-cell-size; 
+    float: left; 
+    font-size: .9em; 
+  }
 }
+
+
 

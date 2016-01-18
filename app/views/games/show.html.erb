@@ -1,13 +1,11 @@
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="/assets/jquery.ui.touch-punch.min.js"></script>
 
-<div id="container" class="clear">
-	<div id="games-left-column">
-      <div id="user1-turn" class="circle <%= "turn" if @game.turn == @game.white_player_id%>">
-        <%= @game.turn == @game.white_player_id ? "TURN" : "" %>
-      </div>
+<div id="games-container" class="container col-sm-10 col-sm-offset-1">
+	<div id="games-left-column" class="col-xs-12 col-sm-4">
 		<div class="user1-info">
-          <div class="text-center"><%= @game.white_player.email %> (White) </div>
+			<div class="text-center"><%= @game.white_player.email %> (White) </div>
 			<div>
 				<div class="pull-left">
 					Wins: 5
@@ -15,28 +13,42 @@
 					Losses: 5
 				</div>
 				<div class="pull-right">
-					IMAGE
+					<div id="user1-turn" class="row <%= "turn" if @game.turn == @game.white_player_id%>">
+						<%= @game.turn == @game.white_player_id ? "TURN" : "" %>
+					</div>
 				</div>
 			</div>
             <div class="clear text-center"><%= @game.get_current_turn_message(@game.white_player_id) %></div>
 		</div>
+		<br />
 		<div class="text-center">
-			<br>
-			<button class="btn btn-warning">Declare Stalemate</button>
-			<br>
-			<br>
-			<button class="btn btn-danger">Surrender</button>
-			<br>
-			<br>
-			<hr>
+			<div class="">
+				<button class="btn btn-danger">Surrender</button>
+			</div>
+		</div>
+		<div class="text-center">
 			<h2>Countdown</h2>
-			<br>
-			<br>
 			<h1>5:00</h1>
+		</div>
+		<div class="user2-info">
+            <div class="text-center"><%= @game.black_player.email %> (Black) </div>
+			<div>
+				<div class="pull-left">
+					Wins: 1
+					<br>
+					Losses: 8
+				</div>
+				<div class="pull-right">
+					<div id="user2-turn" class="row <%= "turn" if @game.turn == @game.black_player_id%>">
+						<%= @game.turn == @game.black_player_id ? "TURN" : "" %>
+					</div>
+				</div>
+			</div>
+            <div class="clear text-center"><%= @game.get_current_turn_message(@game.black_player_id) %></div>
 		</div>
 	</div>
 
-	<div id="games-center-column">
+	<div class="col-xs-12 col-sm-8">
 		<div id="score-board">
 			<div class="pull-left">
 				W: 2
@@ -54,7 +66,7 @@
 				L: 2
 			</div>
 		</div>
-
+		
 		<script>
 			update_url = undefined; 
 			var original_position = '';
@@ -139,7 +151,7 @@
    		 
 	</div>
 
-	<div id="games-right-column">
+	<!-- <div id="games-right-column">
         <div id="user2-turn" class="circle <%= "turn" if @game.turn == @game.black_player_id%>">
           <%= @game.turn == @game.black_player_id ? "TURN" : "" %>
         </div>
@@ -171,5 +183,5 @@
 			<br>
 			<h1 class="text-success">3:30</h1>
 		</div>
-	</div>
+	</div> -->
 </div>
