@@ -1,20 +1,20 @@
 class PiecesController < ApplicationController
-  before_action :is_current_user_turn, :only => [:update]
-  before_action :does_piece_belong_to_current_user, :only => [:update]
+  #before_action :is_current_user_turn, :only => [:update]
+  #before_action :does_piece_belong_to_current_user, :only => [:update]
   
-  skip_before_action :verify_authenticity_token
+  #skip_before_action :verify_authenticity_token
 
 	def update		
-        # We may want to return a boolean from 'move_to'. If there was an error captured ther, we should not update turn
+    # We may want to return a boolean from 'move_to'. If there was an error captured ther, we should not update turn
 		status = current_piece.move_to(params[:piece][:x_position], params[:piece][:y_position])
-        current_game.update_turn if status
-        
-        unless status
-          render :json => { status: "error", msg: "That move is invalid" } and return
-        end
-                
-        render :json => { status: "success" } and return  
+    if status == "own_piece"
+    	render :json => { status: "own_piece", msg: "Can't take your own piece!" }
+    elsif status == "invalid_move"
+    	render :json => { status: "invalid_move", msg: "That move is invalid" }
+    else           
+     render :json => { status: "success" } and return  
 #		render :text => 'Success'
+		end
 	end
 
 	private

@@ -87,9 +87,21 @@
 		            		type: 'PUT',
 		            		beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
 		            		url: update_url,
-		            		dataType: 'html',
-		            		data: { piece: { x_position: $(this).attr('data-item-x'), y_position: $(this).attr('data-item-y') } },
-						    error: function(){				
+		            		dataType: 'json',
+		            		data: { piece: { x_position: $(this).attr('data-item-x'), y_position: $(this).attr('data-item-y') } }
+		            		}).done(function(response){
+		            			if (response.status == "own_piece") {
+		            				alert('hi');
+		            			} else if (response.status == "invalid_move") {
+		            				$(ui.draggable).css({
+					                  'left': original_position.left,
+					                  'top': original_position.top,
+					               }),
+
+				               		alert(response.status);
+		            			}	     
+		            		});
+						   /* error: function(){				
 				               $(ui.draggable).css({
 				                  'left': original_position.left,
 				                  'top': original_position.top,
@@ -99,8 +111,8 @@
 				           	},
 				           	success: function(){
 				            	window.location.reload();
-				            }            	
-		            	});
+				            } */           	
+		            	
 //                        COMMENTS...
 //                        I think using .done at the end of the AJAX request may be best. That way we can look at response.status
 //                        (which will be passed back by the controller) to determine what to do based on a "success" vs "error".

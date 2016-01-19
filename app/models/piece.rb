@@ -1,6 +1,6 @@
 class Piece < ActiveRecord::Base
 	belongs_to :game
-    belongs_to :user
+  belongs_to :user
 
 	def is_obstructed?(x,y)
 		#determine direction that needs to be checked
@@ -17,29 +17,35 @@ class Piece < ActiveRecord::Base
 
 	def move_to(x,y)
 	  target_piece = game.pieces.where(:x_position => x.to_i, :y_position => y.to_i).first
-	  if target_piece != nil and target_piece.color == self.color
-        # This could possibly be updated to 'return false'. This will let us return the status of
-        # this operation to the controller
-	  	raise "error"
-	  elsif target_piece !=nil and target_piece.color != self.color
+	  if !valid_move?(x.to_i, y.to_i)
+	  	return "invalid_move"
+	  elsif target_piece !=nil and target_piece.color != self.color and valid_move?(x.to_i, y.to_i)
 	  	target_piece.destroy
 	    update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true) 
+	    return "success"
 	  else
 	  	update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
-	  end
-      
-      # Maybe add return true, if there were no errors
-     
+	  	return "success"
+	  end   
 	end
 
-    def valid_move?(x, y)
-      # Valid parameters passed in?      
-      return false if params_out_of_bounds?(x, y)
-      return true
-    end
+  def valid_move?(x, y)
+    # Valid parameters passed in?      
+    return false if params_out_of_bounds?(x, y)
+    return true
+  end
 
 	private
-  
+
+  	def taking_own_piece?(x, y)
+  		target_piece = game.pieces.where(:x_position => x.to_i, :y_position => y.to_i).first
+  		if target_piece.color == self.color
+  			return true
+  		else
+  			return false
+  		end
+  	end
+
     def is_valid_diagonal_move?(x, y)
       x_diff = (self.x_position - x).abs
       y_diff = (self.y_position - y).abs
