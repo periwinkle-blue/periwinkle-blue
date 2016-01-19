@@ -31,7 +31,7 @@ class Piece < ActiveRecord::Base
 
   def valid_move?(x, y)
     # Valid parameters passed in?      
-    return false if params_out_of_bounds?(x, y)
+    return false if params_out_of_bounds?(x, y) or taking_own_piece?(x,y)
     return true
   end
 
@@ -39,7 +39,9 @@ class Piece < ActiveRecord::Base
 
   	def taking_own_piece?(x, y)
   		target_piece = game.pieces.where(:x_position => x.to_i, :y_position => y.to_i).first
-  		if target_piece.color == self.color
+  		if target_piece.nil?
+  			return false
+  		elsif target_piece.color == self.color
   			return true
   		else
   			return false
