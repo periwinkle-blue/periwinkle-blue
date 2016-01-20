@@ -2,12 +2,9 @@ require 'rails_helper'
 require 'piece'
 
 RSpec.describe Game, type: :model do
-<<<<<<< HEAD
+
   include FactoryGirl::Syntax::Methods
 
-=======
-
->>>>>>> in_check
   before do
     @white_player = create(:user)
     @black_player = create(:user)
@@ -47,18 +44,6 @@ RSpec.describe Game, type: :model do
       end
     end
 
-
-
-  it "should loop through pieces and see if the king is in check" do
-    King.create(:color => 0, :x_position => 3, :y_position => 3, :game => @game)
-    # Bishop.create(:color => 1, :x_position => 3, :y_position => 3, :game => @game)
-    # Queen.create(:color => 1, :x_position => 0, :y_position => 3, :game => @game)
-    # Rook.create(:color => 1, :x_position => 0, :y_position => 3, :game => @game)
-    # Pawn.create(:color => 1, :x_position => 2, :y_position => 4, :game => @game)
-    Knight.create(:color => 1, :x_position => 1, :y_position => 4, :game => @game)
-    Pawn.create(:color => 1, :x_position => 3, :y_position => 4, :game => @game)
-
-    expect(@game.king_in_check?).to eq(true)
   end
 
   describe "#will_cause_check?" do
@@ -100,6 +85,18 @@ RSpec.describe Game, type: :model do
 
 
   end
+
+  it "should loop through pieces and see if the king is in check" do
+    King.create(:color => 0, :x_position => 3, :y_position => 3, :game => @game)
+    # Bishop.create(:color => 1, :x_position => 3, :y_position => 3, :game => @game)
+    # Queen.create(:color => 1, :x_position => 0, :y_position => 3, :game => @game)
+    # Rook.create(:color => 1, :x_position => 0, :y_position => 3, :game => @game)
+    # Pawn.create(:color => 1, :x_position => 2, :y_position => 4, :game => @game)
+    Knight.create(:color => 1, :x_position => 1, :y_position => 4, :game => @game)
+    Pawn.create(:color => 1, :x_position => 3, :y_position => 4, :game => @game)
+
+    expect(@game.king_in_check?).to eq(true)
+  end  
 
 
 end
