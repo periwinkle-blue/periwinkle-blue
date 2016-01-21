@@ -16,20 +16,16 @@ class Piece < ActiveRecord::Base
 	end
 
 	def move_to(x,y)
+	  pawn_promotion = false
 	  target_piece = game.pieces.where(:x_position => x.to_i, :y_position => y.to_i).first
-	  if target_piece != nil and target_piece.color == self.color
-        # This could possibly be updated to 'return false'. This will let us return the status of
-        # this operation to the controller
-	  	raise "error"
-	  elsif target_piece !=nil and target_piece.color != self.color
+	  if !valid_move?(x.to_i, y.to_i)
+	  	return "invalid_move"
+	  elsif target_piece !=nil and target_piece.color != self.color and valid_move?(x.to_i, y.to_i)
 	  	target_piece.destroy
-	    update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true) 
+	    succesful_move(x,y)
 	  else
-	  	update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
-	  end
-      
-      # Maybe add return true, if there were no errors
-     
+	  	succesful_move(x,y)
+	  end   
 	end
 
     def valid_move?(x, y)
@@ -39,6 +35,15 @@ class Piece < ActiveRecord::Base
     end
 
 	private
+
+	def succesful_move(x,y)
+		update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
+	  	if pawn_promotion == true
+	  		return "pawn_promotion"
+	  	else
+	  		return "success"
+		end
+	end
   
     def is_valid_diagonal_move?(x, y)
       x_diff = (self.x_position - x).abs

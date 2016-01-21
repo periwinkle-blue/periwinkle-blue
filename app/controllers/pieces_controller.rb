@@ -4,22 +4,19 @@ class PiecesController < ApplicationController
   
   skip_before_action :verify_authenticity_token
 
-	def update		
-        # We may want to return a boolean from 'move_to'. If there was an error captured ther, we should not update turn
-		status = current_piece.move_to(params[:piece][:x_position], params[:piece][:y_position])
-        current_game.update_turn if status
-        
-        unless status
-          render :json => { status: "error", msg: "That move is invalid" } and return
-        end
-puts pawn_promotion
-        if pawn_promotion == true
-          render :json => { status: "success", pawn_promotion: true } and return  
-        else
-          render :json => { status: "success" } and return  
-        end
-#		render :text => 'Success'
-	end
+  def update    
+    # We may want to return a boolean from 'move_to'. If there was an error captured ther, we should not update turn
+    status = current_piece.move_to(params[:piece][:x_position], params[:piece][:y_position])
+    if status == "own_piece"
+      render :json => { status: "own_piece", msg: "Can't take your own piece!" }
+    elsif status == "invalid_move"
+      render :json => { status: "invalid_move", msg: "That move is invalid" }
+    elsif status == "pawn_promotion"
+      render :json => { status: "success", pawn_promotion: true } and return
+    else
+      render :json => { status: "success" } and return  
+    end
+  end
 
 	private
 

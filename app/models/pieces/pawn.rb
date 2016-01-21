@@ -1,7 +1,6 @@
 class Pawn < Piece
   before_create :set_defaults
-  attr_accessor :direction
-  
+
   def set_defaults
     # 1 - black (bottom), 0 - white (top)
     self.moved = false
@@ -17,7 +16,7 @@ class Pawn < Piece
     if is_valid_two_square_move?(x,y) || 
     is_valid_one_square_move?(x,y) || 
       valid_capture?(x,y)
-        @pawn_promotion = can_promote?(x, y)
+        pawn_promotion = can_promote?(x, y)
         return true
     end
 
