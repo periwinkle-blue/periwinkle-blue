@@ -1,5 +1,6 @@
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
 
 <div id="container" class="clear">
 	<div id="games-left-column">
@@ -56,9 +57,21 @@
 		</div>
 
 		<script>
+			var myFirebaseRef = new Firebase("https://tfp-periwinkle-blue.firebaseio.com/");
+			var gameRef = myFirebaseRef.child(<%= @game.id %>);
+			
+			function() {
+					gameRef.set({
+						black_player: <%= @game.black_player_id %>,
+						white_player: <%= @game.white_player_id %>
+					});
+			};
+
+
 			update_url = undefined; 
 			var original_position = '';
 			$(function() {
+				
               revertFlag = false;
               origTop = 0;
               origTopOffset = 0;
@@ -98,7 +111,15 @@
 				               alert('You cant take your own piece!');
 				           	},
 				           	success: function(){
+				           		// Write piece move data to Firebase
+				    //        		function() {
+								// 	gameRef.set({
+								// 		$(this).attr('data-item-id'): { x_position: $(this).attr('data-item-x'), y_position: $(this).attr('data-item-y') }
+								// 	});
+								// });
+				            	// { piece: { x_position: $(this).attr('data-item-x'), y_position: $(this).attr('data-item-y') } }
 				            	window.location.reload();
+
 				            }            	
 		            	});
 //                        COMMENTS...
