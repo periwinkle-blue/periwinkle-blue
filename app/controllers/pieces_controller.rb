@@ -8,13 +8,13 @@ class PiecesController < ApplicationController
     # We may want to return a boolean from 'move_to'. If there was an error captured ther, we should not update turn
     status = current_piece.move_to(params[:piece][:x_position], params[:piece][:y_position])
     if status == "own_piece"
-      render :json => { status: "own_piece", msg: "Can't take your own piece!" }
+      render :json => { stat: "own_piece", msg: "Can't take your own piece!" }
     elsif status == "invalid_move"
-      render :json => { status: "invalid_move", msg: "That move is invalid" }
+      render :json => { stat: "invalid_move", msg: "That move is invalid" }
     elsif status == "pawn_promotion"
-      render :json => { status: "success", pawn_promotion: true } and return
+      render :json => { stat: "pawn_promotion" } and return
     else
-      render :json => { status: "success" } and return  
+      render :json => { stat: "success" } and return  
     end
   end
 

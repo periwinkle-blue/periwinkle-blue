@@ -58,6 +58,8 @@
 		<script>
 			update_url = undefined; 
 			var original_position = '';
+			var square = '';
+			
 			$(function() {
               revertFlag = false;
               origTop = 0;
@@ -72,7 +74,7 @@
 
 				$('.piece').draggable({ 
 					containment: "#board",
-					snap: ".square",
+					/*snap: ".square",*/
 				    start: function( event, ui ) {
 						original_position = ui.position;
 					}
@@ -81,51 +83,43 @@
 				$('.square').droppable({
 					hoverClass: "highlighted",
 					drop: function(event, ui) {
-
+						
+						var square = $(this);
+						/*ui.draggable.position({
+							my: "center",
+							at: "center",
+							of: $this,
+						});*/
+						
+	               		
 
 		            	$.ajax({
 		            		type: 'PUT',
 		            		beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
 		            		url: update_url,
-		            		dataType: 'html',
-		            		data: { piece: { x_position: $(this).attr('data-item-x'), y_position: $(this).attr('data-item-y') } },
-						    error: function(){				
-				               $(ui.draggable).css({
-				                  'left': original_position.left,
-				                  'top': original_position.top,
-				               }),
+		            		dataType: 'json',
+		            		data: { piece: { x_position: $(this).attr('data-item-x'), y_position: $(this).attr('data-item-y') } }
+		            		}).done(function(response){
+		            			alert(response.stat);
+		            			if (response.stat == "invalid_move") {				
+		            				$(ui.draggable).css({
+					                  'left': original_position.left,
+					                  'top': original_position.top,
+					               }),
+				               		alert(response.stat);
+		            			} else if (response.stat == "pawn_promotion") {
+		            				alert("PAWN PROMOTION!");
 
-				               alert('You cant take your own piece!');
-				           	},
-				           	success: function(){
-
-				           		// if status == promotion
-			            		// $('#myModal').modal('show');
-
-			            		// else 
-
-				            	window.location.reload();
-
-			            	
-
-				            }            	
+		            			} else {
+		            				ui.draggable.position({
+										my: "center",
+										at: "center",
+										of: square,
+									});
+									window.location.reload();
+		            			}	     
 		            	});
-//                        COMMENTS...
-//                        I think using .done at the end of the AJAX request may be best. That way we can look at response.status
-//                        (which will be passed back by the controller) to determine what to do based on a "success" vs "error".
-//                        For example...
-//                        $.ajax({}).done(function(response) {
-//                          if (response.status == "success") {
-//                            window.location.reload();
-//                          } else {
-//                            $(ui.draggable).css({
-//				                  'left': original_position.left,
-//				                  'top': original_position.top,
-//				               })
-//                          }
-//		            	  })
-//                        For this to work, you would have to return a json response from the controller, but this gives flexibility
-//                        to send back any "status" or "msg" you want, and then you can use it as needed here.
+						   
 		        	}
 				});
 			});

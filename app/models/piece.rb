@@ -1,6 +1,7 @@
 class Piece < ActiveRecord::Base
 	belongs_to :game
     belongs_to :user
+    attr_accessor :pawn_promotion
 
 	def is_obstructed?(x,y)
 		#determine direction that needs to be checked
@@ -16,7 +17,6 @@ class Piece < ActiveRecord::Base
 	end
 
 	def move_to(x,y)
-	  pawn_promotion = false
 	  target_piece = game.pieces.where(:x_position => x.to_i, :y_position => y.to_i).first
 	  if !valid_move?(x.to_i, y.to_i)
 	  	return "invalid_move"
@@ -29,7 +29,7 @@ class Piece < ActiveRecord::Base
 	end
 
     def valid_move?(x, y)
-      # Valid parameters passed in?      
+      # Valid parameters passed in?
       return false if params_out_of_bounds?(x, y)
       return true
     end
@@ -38,7 +38,7 @@ class Piece < ActiveRecord::Base
 
 	def succesful_move(x,y)
 		update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
-	  	if pawn_promotion == true
+	  	if @pawn_promotion == true
 	  		return "pawn_promotion"
 	  	else
 	  		return "success"
