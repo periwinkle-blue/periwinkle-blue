@@ -8,13 +8,12 @@ class PiecesController < ApplicationController
     # We may want to return a boolean from 'move_to'. If there was an error captured ther, we should not update turn
     status = current_piece.move_to(params[:piece][:x_position], params[:piece][:y_position])
     if status == "own_piece"
-      render :json => { stat: "own_piece", msg: "Can't take your own piece!" }
+      render :json => { result: "own_piece", msg: "Can't take your own piece!" }
     elsif status == "invalid_move"
-      render :json => { stat: "invalid_move", msg: "That move is invalid" }
-    elsif status == "pawn_promotion"
-      render :json => { stat: "pawn_promotion" } and return
+      render :json => { result: "invalid_move", msg: "That move is invalid" }
     else
-      render :json => { stat: "success" } and return  
+      # current_game.update_turn
+      render :json => { result: status } and return  
     end
   end
 
@@ -36,7 +35,7 @@ class PiecesController < ApplicationController
   def is_current_user_turn
     if current_game.turn != current_user.id
 #      flash[:alert] = "Please wait for your turn!"
-      render :json => { status: "error", msg: "Please wait for your turn!"  } and return
+      render :json => { result: "error", msg: "Please wait for your turn!"  } and return
     end
   end
     
@@ -47,7 +46,7 @@ class PiecesController < ApplicationController
     
     unless is_your_piece
 #      flash[:alert] = "You cannot move your opponent's piece!"
-      render :json => { status: "error", msg: "You cannot move your opponent's piece!" } and return
+      render :json => { result: "error", msg: "You cannot move your opponent's piece!" } and return
     end
     
   end

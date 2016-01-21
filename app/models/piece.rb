@@ -1,7 +1,6 @@
 class Piece < ActiveRecord::Base
 	belongs_to :game
     belongs_to :user
-    attr_accessor :pawn_promotion
 
 	def is_obstructed?(x,y)
 		#determine direction that needs to be checked
@@ -37,7 +36,8 @@ class Piece < ActiveRecord::Base
 	private
 
 	def succesful_move(x,y)
-		update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
+		# update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
+		# current_game.update_turn
 	  	if @pawn_promotion == true
 	  		return "pawn_promotion"
 	  	else
