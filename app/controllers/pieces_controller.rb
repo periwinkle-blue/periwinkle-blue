@@ -12,7 +12,7 @@ class PiecesController < ApplicationController
     elsif status == "invalid_move"
       render :json => { result: "invalid_move", msg: "That move is invalid" }
     else
-      # current_game.update_turn
+      current_game.update_turn
       render :json => { result: status } and return  
     end
   end

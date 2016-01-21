@@ -36,8 +36,7 @@ class Piece < ActiveRecord::Base
 	private
 
 	def succesful_move(x,y)
-		# update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
-		# current_game.update_turn
+		update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
 	  	if @pawn_promotion == true
 	  		return "pawn_promotion"
 	  	else
