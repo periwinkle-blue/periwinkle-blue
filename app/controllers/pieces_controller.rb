@@ -12,8 +12,12 @@ class PiecesController < ApplicationController
         unless status
           render :json => { status: "error", msg: "That move is invalid" } and return
         end
-                
-        render :json => { status: "success" } and return  
+puts pawn_promotion
+        if pawn_promotion == true
+          render :json => { status: "success", pawn_promotion: true } and return  
+        else
+          render :json => { status: "success" } and return  
+        end
 #		render :text => 'Success'
 	end
 
