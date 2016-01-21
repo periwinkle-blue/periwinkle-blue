@@ -1,5 +1,6 @@
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 
 <div id="container" class="clear">
 	<div id="games-left-column">
@@ -74,7 +75,6 @@
 
 				$('.piece').draggable({ 
 					containment: "#board",
-					/*snap: ".square",*/
 				    start: function( event, ui ) {
 						original_position = ui.position;
 					}
@@ -85,13 +85,6 @@
 					drop: function(event, ui) {
 						
 						var square = $(this);
-						/*ui.draggable.position({
-							my: "center",
-							at: "center",
-							of: $this,
-						});*/
-						
-	               		
 
 		            	$.ajax({
 		            		type: 'PUT',
@@ -104,8 +97,7 @@
 		            				$(ui.draggable).css({
 					                  'left': original_position.left,
 					                  'top': original_position.top,
-					               }),
-				               		alert(response.status);
+					               });				               		
 		            			} else {
 		            				ui.draggable.position({
 										my: "center",
