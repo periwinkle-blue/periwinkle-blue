@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
+  add_flash_types :game_alert
 
   def create
     status = Game.create( :white_player_id => current_user.id )
@@ -43,10 +44,10 @@ class GamesController < ApplicationController
       king_check = @game.king_in_check?
 
       if king_check
-        flash[:notice] = "King is in check!"
+        flash[:game_alert] = "King is in check!"
       else
         # Prevents King is in check notice from displaying once more after move
-        flash[:notice] = ""
+        flash[:game_alert] = ""
       end
   end
 
