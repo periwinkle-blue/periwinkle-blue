@@ -23,37 +23,43 @@ class Piece < ActiveRecord::Base
 	  	raise "error"
 	  elsif target_piece !=nil and target_piece.color != self.color
 	  	target_piece.destroy
-	    update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true) 
+	    update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
 	  else
 	  	update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
 	  end
-      
+
       # Maybe add return true, if there were no errors
      
 	end
 
-    def valid_move?(x, y)
-      # Valid parameters passed in?      
-      return false if params_out_of_bounds?(x, y)
-      return true
-    end
+  def valid_move?(x, y)
+    # Valid parameters passed in?
+    return false if params_out_of_bounds?(x, y)
+    return true
+  end
 
 	private
-  
+
+  def params_out_of_bounds?(x, y)
+    return true if x < 0 || y < 0 || x > 7 || y > 7
+  end
+
+
     def is_valid_diagonal_move?(x, y)
       x_diff = (self.x_position - x).abs
       y_diff = (self.y_position - y).abs
 
-      x_diff == y_diff and !self.is_obstructed?(x,y)  
+      x_diff == y_diff and !self.is_obstructed?(x,y)
     end
 
     def is_valid_horizontal_or_vertical_move?(x, y)
       (self.x_position == x or self.y_position == y) and !self.is_obstructed?(x,y)
     end
-    
+
     def params_out_of_bounds?(x, y)
       return true if x < 0 || y < 0 || x > 7 || y > 7
     end
+
 
 	def is_obstructed_diagonally?(x,y)
 		range = (y_position - y).abs - 1
