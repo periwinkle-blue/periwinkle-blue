@@ -57,22 +57,23 @@
 		</div>
 
 		<script>
+
 			update_url = undefined; 		
 			var originalPosition = new Firebase('https://incandescent-torch-3468.firebaseio.com/games/');
 			$(function() {
              	var originalPosition = new Firebase('https://incandescent-torch-3468.firebaseio.com/games/');
 				$('.piece').on ("mousedown", function() {
 					update_url = $(this).attr('data-update-url');
-					
+
 				});
 
-				$('.piece').draggable({ 
+				$('.piece').draggable({
 					containment: "#board",
 				    start: function( event, ui ) {
 						original_position = ui.position;
 					}
 				});
-				
+
 				$('.square').droppable({
 					hoverClass: "highlighted",
 					drop: function(event, ui) {
@@ -97,6 +98,7 @@
 									});								
 		            			}	     
 		            	});						   
+
 		        	}
 				});							
 			});
@@ -110,21 +112,16 @@
 				});
 		</script>
 
-
 		<div id="board">
 			<%= render "draw_pieces"%>
 		</div>
+		<br>
+		<% if flash[:game_alert].present? %>
+	    <div class="col-xs-10 col-xs-offset-1 alert alert-danger text-center">
+	      <%= flash[:game_alert] %>
+	    </div>
+   	<% end %>
 
-		<% if flash[:error].present? %>
-	      <div class="col-xs-10 col-xs-offset-1 alert alert-danger">
-	        <%= flash[:error] %>
-	      </div>
-	    <% elsif flash[:notice].present? %>
-	    <div class="col-xs-10 col-xs-offset-1 alert alert-danger">
-	        <%= flash[:notice] %>
-	      </div>
-   		<% end %>
-   		 
 	</div>
 
 	<div id="games-right-column">
