@@ -88,15 +88,26 @@ RSpec.describe Game, type: :model do
 
   it "should loop through pieces and see if the king is in check" do
     King.create(:color => 0, :x_position => 3, :y_position => 3, :game => @game)
+    King.create(:color => 1, :x_position => 7, :y_position => 7, :game => @game)
     # Bishop.create(:color => 1, :x_position => 3, :y_position => 3, :game => @game)
     # Queen.create(:color => 1, :x_position => 0, :y_position => 3, :game => @game)
-    # Rook.create(:color => 1, :x_position => 0, :y_position => 3, :game => @game)
+    Rook.create(:color => 1, :x_position => 0, :y_position => 3, :game => @game)
     # Pawn.create(:color => 1, :x_position => 2, :y_position => 4, :game => @game)
-    Knight.create(:color => 1, :x_position => 1, :y_position => 4, :game => @game)
-    Pawn.create(:color => 1, :x_position => 3, :y_position => 4, :game => @game)
+    # Knight.create(:color => 1, :x_position => 1, :y_position => 4, :game => @game)
+    # Pawn.create(:color => 1, :x_position => 3, :y_position => 4, :game => @game)
 
-    expect(@game.king_in_check?).to eq(true)
-  end  
+    expect(@game.king_in_check).to eq("check")
+  end
 
+  it "should see if the king is in checkmate" do
+    King.create(:color => 0, :x_position => 3, :y_position => 3, :game => @game)
+    Queen.create(:color => 1, :x_position => 3, :y_position => 1, :game => @game)
+    Rook.create(:color => 1, :x_position => 2, :y_position => 1, :game => @game)
+    Rook.create(:color => 1, :x_position => 4, :y_position => 1, :game => @game)
+
+    Bishop.create(:color => 1, :x_position => 5, :y_position => 6, :game => @game)
+
+    expect(@game.king_in_check).to eq("checkmate")
+  end
 
 end

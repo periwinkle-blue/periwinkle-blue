@@ -67,7 +67,7 @@ class Game < ActiveRecord::Base
     end
   end
 
-  def king_in_check?
+  def king_in_check
     # Get pieces from database
     pieces.find_each do |piece|
       # Loop through positions on board to verify valid moves
@@ -79,8 +79,8 @@ class Game < ActiveRecord::Base
             king_check = piece_on(x, y)
             # Piece on position was not nil, is a king, and is opposite color from original piece
             if !king_check.nil? && king_check.type == "King" && king_check.color != piece.color
-              # Better move your king
-              return true
+              # Check if king is in checkmate or just in check
+              return checkmate?(x, y) ? "checkmate" : "check"
             end
           end
 
@@ -90,6 +90,31 @@ class Game < ActiveRecord::Base
     end
     # King is all good
     return false
+  end
+
+  # Receive current position for king
+  def checkmate?(king_x, king_y)
+    king = pieces.where(:x_position => king_x, :y_position => king_y).first
+    # Variable to help determine if all the positions are in check
+    king_checkmate = 0
+
+    # Get the range for the loop
+    x_start = king_x - 1
+    x_end = x_start + 2
+    y_start = king_y - 1
+    y_end = y_start + 2
+
+    # Start from top left position for king
+    for x in x_start..x_end
+      for y in y_start..y_end
+        # Pass in possible moves to check if it will cause a check
+        if king.will_cause_check?(x, y)
+          king_checkmate += 1
+        end
+      end
+    end
+    # Minus 1 for king's position
+    return (king_checkmate - 1) == 8 ? true : false
   end
 
 end
