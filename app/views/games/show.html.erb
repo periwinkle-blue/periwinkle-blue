@@ -127,14 +127,10 @@
 		</div>
 		<br>
 		<% if flash[:game_alert].present? %>
-	      <div class="col-xs-10 col-xs-offset-1 alert alert-danger text-center">
-	        <%= flash[:game_alert] %>
-	      </div>
-	    <% elsif flash[:game_alert].present? %>
-	    	<div class="col-xs-10 col-xs-offset-1 alert alert-danger text-center">
-	        <%= flash[:game_alert] %>
-	      </div>
-   		<% end %>
+	    <div class="col-xs-10 col-xs-offset-1 alert alert-danger text-center">
+	      <%= flash[:game_alert] %>
+	    </div>
+   	<% end %>
 
 	</div>
 
