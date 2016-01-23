@@ -10,8 +10,7 @@ class Bishop < Piece
     # Valid parameters passed in?
     valid_params = super
     return false unless valid_params
-
-    is_valid_diagonal_move?(x, y)
+    return true if is_valid_diagonal_move?(x, y)
   end
 
   def valid_capture?(x, y)

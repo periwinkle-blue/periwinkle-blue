@@ -1,5 +1,6 @@
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 
 <div id="container" class="clear">
 	<div id="games-left-column">
@@ -56,15 +57,11 @@
 		</div>
 
 		<script>
-			update_url = undefined;
-			var original_position = '';
-			$(function() {
-              revertFlag = false;
-              origTop = 0;
-              origTopOffset = 0;
-              origLeft = 0;
-              origLeftOffset = 0;
 
+			update_url = undefined; 		
+			var originalPosition = new Firebase('https://incandescent-torch-3468.firebaseio.com/games/');
+			$(function() {
+             	var originalPosition = new Firebase('https://incandescent-torch-3468.firebaseio.com/games/');
 				$('.piece').on ("mousedown", function() {
 					update_url = $(this).attr('data-update-url');
 
@@ -72,7 +69,6 @@
 
 				$('.piece').draggable({
 					containment: "#board",
-					snap: ".square",
 				    start: function( event, ui ) {
 						original_position = ui.position;
 					}
@@ -81,45 +77,39 @@
 				$('.square').droppable({
 					hoverClass: "highlighted",
 					drop: function(event, ui) {
-
-
+						var square = $(this);					
 		            	$.ajax({
 		            		type: 'PUT',
 		            		beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
 		            		url: update_url,
-		            		dataType: 'html',
-		            		data: { piece: { x_position: $(this).attr('data-item-x'), y_position: $(this).attr('data-item-y') } },
-						    error: function(){
-				               $(ui.draggable).css({
-				                  'left': original_position.left,
-				                  'top': original_position.top,
-				               }),
+		            		dataType: 'json',
+		            		data: { piece: { x_position: $(this).attr('data-item-x'), y_position: $(this).attr('data-item-y') } }
+		            		}).done(function(response){
+		            			if (response.status == "invalid_move") {				
+		            				$(ui.draggable).css({
+					                  'left': original_position.left,
+					                  'top': original_position.top,
+					               });				               		
+		            			} else {
+		            				ui.draggable.position({		            					
+										my: "center",
+										at: "center",
+										of: square,										
+									});								
+		            			}	     
+		            	});						   
 
-				               alert('You cant take your own piece!');
-				           	},
-				           	success: function(){
-				            	window.location.reload();
-				            }
-		            	});
-//                        COMMENTS...
-//                        I think using .done at the end of the AJAX request may be best. That way we can look at response.status
-//                        (which will be passed back by the controller) to determine what to do based on a "success" vs "error".
-//                        For example...
-//                        $.ajax({}).done(function(response) {
-//                          if (response.status == "success") {
-//                            window.location.reload();
-//                          } else {
-//                            $(ui.draggable).css({
-//				                  'left': original_position.left,
-//				                  'top': original_position.top,
-//				               })
-//                          }
-//		            	  })
-//                        For this to work, you would have to return a json response from the controller, but this gives flexibility
-//                        to send back any "status" or "msg" you want, and then you can use it as needed here.
 		        	}
-				});
+				});							
 			});
+			
+			var currentTime = <%= Time.now.to_i %>;
+				originalPosition.on('child_added', function(snapshot){
+					startingPos = snapshot.val();
+					if (startingPos.time >= currentTime){	
+						window.location.reload();						
+					};
+				});
 		</script>
 
 		<div id="board">
