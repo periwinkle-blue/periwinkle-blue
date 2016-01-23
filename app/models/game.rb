@@ -80,7 +80,13 @@ class Game < ActiveRecord::Base
             # Piece on position was not nil, is a king, and is opposite color from original piece
             if !king_check.nil? && king_check.type == "King" && king_check.color != piece.color
               # Check if king is in checkmate or just in check
-              return checkmate?(x, y) ? "checkmate" : "check"
+              if king_check.color == 0
+                return checkmate?(x, y) ? "white_checkmate" : "white_in_check"
+              end
+
+              if king_check.color == 1
+                return checkmate?(x, y) ? "black_checkmate" : "black_in_check"
+              end
             end
           end
 

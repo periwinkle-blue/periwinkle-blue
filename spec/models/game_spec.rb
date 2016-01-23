@@ -96,7 +96,7 @@ RSpec.describe Game, type: :model do
     # Knight.create(:color => 1, :x_position => 1, :y_position => 4, :game => @game)
     # Pawn.create(:color => 1, :x_position => 3, :y_position => 4, :game => @game)
 
-    expect(@game.king_in_check).to eq("check")
+    expect(@game.king_in_check).to eq("white_in_check")
   end
 
   it "should see if the king is in checkmate" do
@@ -107,7 +107,7 @@ RSpec.describe Game, type: :model do
 
     Bishop.create(:color => 1, :x_position => 5, :y_position => 6, :game => @game)
 
-    expect(@game.king_in_check).to eq("checkmate")
+    expect(@game.king_in_check).to eq("white_checkmate")
   end
 
 end

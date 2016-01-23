@@ -43,10 +43,14 @@ class GamesController < ApplicationController
       # Check to see if king is in check
       king_check = @game.king_in_check
 
-      if king_check == "check"
-        flash[:game_alert] = "King is in check!"
-      elsif king_check == "checkmate"
-        flash[:game_alert] = "Checkmate!"
+      if king_check == "white_in_check"
+        flash[:game_alert] = "White king in check!"
+      elsif king_check == "white_checkmate"
+        flash[:game_alert] = "Checkmate on white king!"
+      elsif king_check == "black_in_check"
+          flash[:game_alert] = "Black king in check!"
+      elsif king_check == "black_checkmate"
+          flash[:game_alert] = "Checkmate on black king!"
       else
         # Prevents King is in check notice from displaying once more after move
         flash[:game_alert] = ""
