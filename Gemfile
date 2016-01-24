@@ -47,6 +47,7 @@ gem "figaro", ">= 1.0.0"
 # Add Factory Girl for testing
 gem "factory_girl_rails", "~> 4.0"
 
+gem 'firebase'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

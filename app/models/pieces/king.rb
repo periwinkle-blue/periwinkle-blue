@@ -13,21 +13,21 @@ class King < Piece
 
     is_valid_one_square_move?(x, y)
   end
-  
+
   def valid_capture?(x, y)
     return self.valid_move?(x, y)
   end
-  
+
   def will_cause_check?(x, y)
     opposing_pieces = self.game.get_active_opposing_pieces(self.color)
-    
+
     opposing_pieces.each do |piece|
       return true if piece.valid_capture?(x, y)
     end
-    
+
     return false
   end
-  
+
   private
   
   def is_valid_one_square_move?(x, y)
@@ -39,7 +39,7 @@ class King < Piece
     (x_move < 2) &&
     (y_move < 2)
   end
-  
-  
+
+
 
 end

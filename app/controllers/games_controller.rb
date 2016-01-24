@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
+  add_flash_types :game_alert
 
   def create
     status = Game.create( :white_player_id => current_user.id )
@@ -23,7 +24,7 @@ class GamesController < ApplicationController
   def show
     puts "In Games#show"
       @game = Game.find_by_id(params[:id])
-      
+
       @board = [
                   [1, 0, 1, 0, 1, 0, 1, 0],
                   [0, 1, 0, 1, 0, 1, 0, 1],
@@ -34,9 +35,25 @@ class GamesController < ApplicationController
                   [1, 0, 1, 0, 1, 0, 1, 0],
                   [0, 1, 0, 1, 0, 1, 0, 1]
               ]
-      
+
       if @game.nil?
         render :text => "No game specified", :status => :not_found
+      end
+
+      # Check to see if king is in check
+      king_check = @game.king_in_check
+
+      if king_check == "white_in_check"
+        flash[:game_alert] = "White king in check!"
+      elsif king_check == "white_checkmate"
+        flash[:game_alert] = "Checkmate on white king!"
+      elsif king_check == "black_in_check"
+          flash[:game_alert] = "Black king in check!"
+      elsif king_check == "black_checkmate"
+          flash[:game_alert] = "Checkmate on black king!"
+      else
+        # Prevents King is in check notice from displaying once more after move
+        flash[:game_alert] = ""
       end
   end
 

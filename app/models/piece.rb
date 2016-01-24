@@ -1,6 +1,6 @@
 class Piece < ActiveRecord::Base
 	belongs_to :game
-    belongs_to :user
+  belongs_to :user
 
 	def is_obstructed?(x,y)
 		#determine direction that needs to be checked
@@ -21,43 +21,53 @@ class Piece < ActiveRecord::Base
 	  	return "invalid_move"
 	  elsif target_piece !=nil and target_piece.color != self.color and valid_move?(x.to_i, y.to_i)
 	  	target_piece.destroy
-	    succesful_move(x,y)
+	    update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true) 
+	    return "success"
 	  else
-	  	succesful_move(x,y)
+	  	update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
+	  	return "success"
 	  end   
 	end
 
-    def valid_move?(x, y)
-      # Valid parameters passed in?
-      return false if params_out_of_bounds?(x, y)
-      return true
-    end
+  def valid_move?(x, y)
+    # Valid parameters passed in?      
+    return false if params_out_of_bounds?(x, y) or taking_own_piece?(x,y)
+    return true
+  end
 
 	private
 
-	def succesful_move(x,y)
-		update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
-	  	if @pawn_promotion == true
-	  		return "pawn_promotion"
-	  	else
-	  		return "success"
-		end
-	end
-  
+
+  	def taking_own_piece?(x, y)
+  		target_piece = game.pieces.where(:x_position => x.to_i, :y_position => y.to_i).first
+  		if target_piece.nil?
+  			return false
+  		elsif target_piece.color == self.color
+  			return true
+  		else
+  			return false
+  		end
+  	end
+
+	  def params_out_of_bounds?(x, y)
+	    return true if x < 0 || y < 0 || x > 7 || y > 7
+	  end
+
     def is_valid_diagonal_move?(x, y)
       x_diff = (self.x_position - x).abs
       y_diff = (self.y_position - y).abs
 
-      x_diff == y_diff and !self.is_obstructed?(x,y)  
+      x_diff == y_diff and !self.is_obstructed?(x,y)
     end
 
     def is_valid_horizontal_or_vertical_move?(x, y)
       (self.x_position == x or self.y_position == y) and !self.is_obstructed?(x,y)
     end
-    
+
     def params_out_of_bounds?(x, y)
       return true if x < 0 || y < 0 || x > 7 || y > 7
     end
+
 
 	def is_obstructed_diagonally?(x,y)
 		range = (y_position - y).abs - 1
