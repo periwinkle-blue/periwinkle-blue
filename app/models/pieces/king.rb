@@ -28,6 +28,14 @@ class King < Piece
     return false
   end
   
+  def in_checkmate?
+    return (surrounding_squares_threatened? and self.will_cause_check?(self.x_position, self.y_position))
+  end
+  
+  def in_stalemate?
+    return (surrounding_squares_threatened? and !self.will_cause_check?(self.x_position, self.y_position))
+  end
+  
   private
   
   def is_valid_one_square_move?(x, y)
@@ -40,6 +48,27 @@ class King < Piece
     (y_move < 2)
   end
   
+  def get_surrounding_squares
+    squares = []
+    
+    squares << [self.x_position, self.y_position - 1] if valid_move?(self.x_position, self.y_position - 1) 
+    squares << [self.x_position, self.y_position + 1] if valid_move?(self.x_position, self.y_position + 1)
+    squares << [self.x_position - 1, self.y_position] if valid_move?(self.x_position - 1, self.y_position)
+    squares << [self.x_position + 1, self.y_position] if valid_move?(self.x_position + 1, self.y_position)
+    squares << [self.x_position + 1, self.y_position + 1] if valid_move?(self.x_position+1, self.y_position+1)
+    squares << [self.x_position + 1, self.y_position - 1] if valid_move?(self.x_position+1, self.y_position-1)
+    squares << [self.x_position - 1, self.y_position + 1] if valid_move?(self.x_position-1, self.y_position+1)
+    squares << [self.x_position - 1, self.y_position - 1] if valid_move?(self.x_position-1, self.y_position-1)
+    
+    return squares
+  end
+  
+  def surrounding_squares_threatened?
+    surrounding_squares = get_surrounding_squares
+    surrounding_squares.each { |square| return false unless self.will_cause_check?(square[0], square[1])}    
+    
+    return true
+  end
   
 
 end

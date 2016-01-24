@@ -143,5 +143,71 @@ RSpec.describe King, type: :model do
     end
     
   end
+  
+  describe "#in_checkmate?" do
+    
+    context "threatended by opposing pieces" do
+      describe "opposing queen" do
+        it "returns true" do
+          @king.x_position = 0
+          @king.y_position = 1
+          @king.save
+
+          @pawn1 = Pawn.create( :x_position => 1, :y_position => 0, :game => @game, :color => 1)
+          @pawn2 = Pawn.create( :x_position => 1, :y_position => 1, :game => @game, :color => 1)
+          @pawn3 = Pawn.create( :x_position => 1, :y_position => 2, :game => @game, :color => 1)
+          @white_queen = Queen.create( :x_position => 0, :y_position => 4, :game => @game, :color => 0)
+
+          @game.reload
+
+          expect(@king.in_checkmate?).to eq(true)
+        end
+      end
+      
+      describe "opposing rooks" do 
+        it "returns true" do
+          @king.x_position = 0
+          @king.y_position = 7
+          @king.save
+
+          @white_rook1 = Rook.create( :x_position => 1, :y_position => 1, :game => @game, :color => 0)
+          @white_rook2 = Rook.create( :x_position => 0, :y_position => 0, :game => @game, :color => 0)
+
+          @game.reload
+
+          expect(@king.in_checkmate?).to eq(true)
+        end
+      end
+    end
+    
+    context "not in checkmate after move" do
+      it "returns false" do
+        @pawn = Pawn.create( :x_position => 7, :y_position => 2, :game => @game, :color => 0 )
+        @pawn = Pawn.create( :x_position => 6, :y_position => 4, :game => @game, :color => 0 )
+        
+        @game.reload
+        
+        expect(@king.in_checkmate?).to eq(false)
+      end
+    end
+    
+  end
+  
+  describe "#in_stalemate" do
+    it "returns true" do
+      @king.x_position = 4
+      @king.y_position = 0
+      @king.save
+      
+      @white_king = King.create( :x_position => 4, :y_position => 2, :game => @game, :color => 0 )
+      @white_queen = Queen.create( :x_position => 3, :y_position => 3, :game => @game, :color => 0 )
+      @white_knight = Knight.create( :x_position => 7, :y_position => 1, :game => @game, :color => 0 )
+      
+      @game.reload
+      
+      expect(@king.in_stalemate?).to eq(true)
+      
+    end
+  end
 
 end

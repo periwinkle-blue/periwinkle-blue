@@ -54,7 +54,6 @@ class Game < ActiveRecord::Base
   
   # Switch turns to the opposing user
   def update_turn
-    puts "UPDATING TURN!"
     self.turn == self.white_player_id ? self.turn = self.black_player_id : self.turn = self.white_player_id
     self.save
   end
@@ -66,5 +65,16 @@ class Game < ActiveRecord::Base
       message = "Waiting on #{User.find(self.turn).email}"
     end
   end
+  
+#  def in_checkmate?(player)
+#    player_color = ( player == self.white_player_id ) ? 0 : 1
+#    player_king = self.pieces.where( :color => player_color, :type => "King").first
+#    
+#    surrounding_squares = player_king.get_surrounding_squares
+#    puts "Surrounding squares: #{surrounding_squares}"
+#    surrounding_squares.each { |square| return false unless player_king.will_cause_check?(square[0], square[1])}
+#    
+#    return true
+#  end
   
 end
