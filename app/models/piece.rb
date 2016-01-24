@@ -29,9 +29,11 @@ class Piece < ActiveRecord::Base
 	  end   
 	end
 
+
   def valid_move?(x, y)
     # Valid parameters passed in?      
     return false if params_out_of_bounds?(x, y) or taking_own_piece?(x,y)
+    #return false if params_out_of_bounds?(x, y) or occupied_by_teammate?(x, y)
     return true
   end
 
@@ -59,15 +61,21 @@ class Piece < ActiveRecord::Base
       x_diff = (self.x_position - x).abs
       y_diff = (self.y_position - y).abs
 
-      x_diff == y_diff and !self.is_obstructed?(x,y)
+      x_diff == y_diff# and !self.is_obstructed?(x,y)  
     end
 
     def is_valid_horizontal_or_vertical_move?(x, y)
-      (self.x_position == x or self.y_position == y) and !self.is_obstructed?(x,y)
+      (self.x_position == x or self.y_position == y)# and !self.is_obstructed?(x,y)
     end
 
     def params_out_of_bounds?(x, y)
       return true if x < 0 || y < 0 || x > 7 || y > 7
+    end
+  
+    def occupied_by_teammate?(x, y)
+      piece = self.game.piece_on(x, y)
+
+      return true if !piece.nil? and piece.color == self.color      
     end
 
 

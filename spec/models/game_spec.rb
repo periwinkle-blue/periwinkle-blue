@@ -10,7 +10,6 @@ RSpec.describe Game, type: :model do
     @black_player = create(:user)
     @game = Game.create( :white_player => @white_player, :black_player => @black_player, :turn => @white_player.id )
     @game.clear_board!
-
   end
 
   it "should find matching piece in the game" do
@@ -27,7 +26,6 @@ RSpec.describe Game, type: :model do
     expect(piece).to eq("")
   end
 
-
   describe "#get_current_turn_message" do
 
     context "white player's turn with white player passed in" do
@@ -43,46 +41,6 @@ RSpec.describe Game, type: :model do
         expect(message).to eq("Waiting on #{@white_player.email}")
       end
     end
-
-  end
-
-  describe "#will_cause_check?" do
-
-    context "with a non-threatening rook" do
-      it "returns false" do
-      end
-    end
-
-    context "with a rook of the same color" do
-      it "returns false" do
-      end
-    end
-
-    context "with a threatening pawn" do
-      it "returns true" do
-      end
-    end
-
-    context "with a threatening bishop" do
-      it "returns true" do
-      end
-    end
-
-    context "with a threatening knight" do
-      it "returns true" do
-      end
-    end
-
-    context "with a threatening queen" do
-      it "returns true" do
-      end
-    end
-
-    context "with a threatening king" do
-      it "returns true" do
-      end
-    end
-
 
   end
 
