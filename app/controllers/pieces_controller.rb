@@ -3,7 +3,8 @@ class PiecesController < ApplicationController
   #before_action :does_piece_belong_to_current_user, :only => [:update] 
 
 	def update	
-    base_uri = 'https://incandescent-torch-3468.firebaseio.com/'
+    base_uri_trevor = 'https://incandescent-torch-3468.firebaseio.com/'
+    base_uri = "https://tfp-periwinkle-blue.firebaseio.com"
 
     firebase = Firebase::Client.new(base_uri)
 
@@ -14,9 +15,11 @@ class PiecesController < ApplicationController
     end
 
     if status == "own_piece"
-    	render :json => { status: "own_piece", msg: "Can't take your own piece!" }
+    	render :json => { status: status, msg: "Can't take your own piece!" }
     elsif status == "invalid_move"
-    	render :json => { status: "invalid_move", msg: "That move is invalid" }
+    	render :json => { status: status, msg: "That move is invalid" }
+    elsif status == "promote_pawn"
+      render :json => {status: status }
     else   
      firebase.push("/games/",{:game=> current_game.id.to_s, :x_position => current_piece.x_position, :y_position => current_piece.y_position, :time => Time.now.to_i})   
      current_game.update_turn     

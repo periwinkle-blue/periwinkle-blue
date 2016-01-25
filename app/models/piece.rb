@@ -21,11 +21,9 @@ class Piece < ActiveRecord::Base
 	  	return "invalid_move"
 	  elsif target_piece !=nil and target_piece.color != self.color and valid_move?(x.to_i, y.to_i)
 	  	target_piece.destroy
-	    update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true) 
-	    return "success"
+	    successful_move(x,y)
 	  else
-	  	update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
-	  	return "success"
+	  	successful_move(x,y)
 	  end   
 	end
 
@@ -38,6 +36,15 @@ class Piece < ActiveRecord::Base
   end
 
 	private
+
+	def successful_move(x,y)
+		update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
+	  	if @pawn_promotion == true
+	  		return "promote_pawn"
+  		else
+  			return "success"
+  		end
+	end
 
 
   	def taking_own_piece?(x, y)
