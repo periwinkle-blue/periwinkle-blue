@@ -48,7 +48,7 @@ class Pawn < Piece
     y_diff = self.y_position - y
     
     if x_diff == (2 * get_direction) and y_diff == 0
-      return true if !self.moved and !self.game.piece_on(x,y) and !self.is_obstructed?(x,y)
+      return true if !self.moved and !self.game.piece_on(x,y)# and !self.is_obstructed?(x,y)
     end
     
     return false

@@ -54,7 +54,6 @@ class Game < ActiveRecord::Base
 
   # Switch turns to the opposing user
   def update_turn
-    puts "UPDATING TURN!"
     self.turn == self.white_player_id ? self.turn = self.black_player_id : self.turn = self.white_player_id
     self.save
   end
