@@ -40,9 +40,9 @@ RSpec.describe PiecesController, type: :controller do
               :x_position => 5,
               :y_position => 0
           } 
-          
-          expect(response).to redirect_to(game_path(@game))
-          expect(flash[:alert]).to eq("You cannot move your opponent's piece!")
+        
+          expect(black_piece.x_position).to eq(6)
+          expect(black_piece.y_position).to eq(0)
         end
       end
       
@@ -80,8 +80,8 @@ RSpec.describe PiecesController, type: :controller do
               :y_position => 0
           } 
           
-          expect(response).to redirect_to(game_path(@game))
-          expect(flash[:alert]).to eq("You cannot move your opponent's piece!")
+          expect(white_piece.x_position).to eq(1)
+          expect(white_piece.y_position).to eq(0)
         end
       end
 

@@ -1,5 +1,6 @@
 class Pawn < Piece
   before_create :set_defaults
+  attr_accessor :direction
 
   def set_defaults
     # 1 - black (bottom), 0 - white (top)
