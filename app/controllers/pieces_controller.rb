@@ -17,7 +17,7 @@ class PiecesController < ApplicationController
     elsif status == "promote_pawn"
       render :json => { status: status }
     else   
-     firebase.push("/games/",{:game=> current_game.id.to_s, :x_position => current_piece.x_position, :y_position => current_piece.y_position, :time => Time.now.to_i})   
+     firebase.push(current_game.id,{:game=> current_game.id.to_s, :x_position => current_piece.x_position, :y_position => current_piece.y_position, :time => Time.now.to_i})   
      current_game.update_turn     
      render :json => { status: status } and return  
 #		render :text => 'Success'
@@ -27,7 +27,7 @@ class PiecesController < ApplicationController
   def pawn_update
     pawn_to_update = current_game.pieces.where( :type => "Pawn" ).order( :updated_at ).last
     pawn_to_update.pawn_to_new(params[:pawnOptions])
-    firebase.push("/games/",{:game=> current_game.id.to_s, :time => Time.now.to_i})
+    firebase.push(current_game.id,{:game=> current_game.id.to_s, :time => Time.now.to_i})
     current_game.update_turn
     redirect_to game_path(current_game)
   end
@@ -70,8 +70,7 @@ class PiecesController < ApplicationController
   end
 
   def firebase
-    base_uri_trevor = 'https://incandescent-torch-3468.firebaseio.com/'
-    base_uri = "https://tfp-periwinkle-blue.firebaseio.com/"
+    base_uri = 'https://incandescent-torch-3468.firebaseio.com/'
 
     firebase = Firebase::Client.new(base_uri)
   end

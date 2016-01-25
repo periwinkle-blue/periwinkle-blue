@@ -59,9 +59,8 @@ script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script -->
 		<script>
 
 			update_url = undefined; 		
-			var originalPosition = new Firebase('https://tfp-periwinkle-blue.firebaseio.com/games/');
+			var originalPosition = new Firebase('https://incandescent-torch-3468.firebaseio.com/' + <%= @game.id %>);
 			$(function() {
-             	var originalPosition = new Firebase('https://tfp-periwinkle-blue.firebaseio.com/games/');
 				$('.piece').on ("mousedown", function() {
 					update_url = $(this).attr('data-update-url');
 
