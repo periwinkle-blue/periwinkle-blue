@@ -1,5 +1,5 @@
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<!-- script src="//code.jquery.com/jquery-1.10.2.js"></script
+script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script -->
 <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 
 <div id="container" class="clear">
@@ -59,9 +59,9 @@
 		<script>
 
 			update_url = undefined; 		
-			var originalPosition = new Firebase('https://incandescent-torch-3468.firebaseio.com/games/');
+			var originalPosition = new Firebase('https://tfp-periwinkle-blue.firebaseio.com/games/');
 			$(function() {
-             	var originalPosition = new Firebase('https://incandescent-torch-3468.firebaseio.com/games/');
+             	var originalPosition = new Firebase('https://tfp-periwinkle-blue.firebaseio.com/games/');
 				$('.piece').on ("mousedown", function() {
 					update_url = $(this).attr('data-update-url');
 
@@ -90,6 +90,8 @@
 					                  'left': original_position.left,
 					                  'top': original_position.top,
 					               });				               		
+		            			} else if (response.status == "promote_pawn") {
+		            				$("#promote").modal("show");
 		            			} else {
 		            				ui.draggable.position({		            					
 										my: "center",
@@ -118,26 +120,26 @@
 		      <div class="modal-header">
 		        <h4 class="modal-title" id="myModalLabel">You made it!<br />Choose your new piece:</h4>
 		      </div>
-		      <%= form_tag do |f| %>
+		      <%= form_tag pawn_update_path(@game) do %>
 		      	<div class="modal-body col-xs-offset-1">
 		                <label class="radio">
-		                    <input value="King" type="radio">King
+		                    <input name="pawnOptions" value="King" type="radio">King
 		                </label>
 		                <label class="radio">
-		                    <input value="Queen" type="radio">Queen
+		                    <input name="pawnOptions" value="Queen" type="radio">Queen
 		                </label>
 		                <label class="radio">
-		                    <input value="Rook" type="radio">Rook
+		                    <input name="pawnOptions" value="Rook" type="radio">Rook
 		                </label>
 		                <label class="radio">
-		                    <input value="Bishop" type="radio">Bishop
+		                    <input name="pawnOptions" value="Bishop" type="radio">Bishop
 		                </label>
 		                <label class="radio">
-		                    <input value="Knight" type="radio">Knight
+		                    <input name="pawnOptions" value="Knight" type="radio">Knight
 		                </label>
 			      </div>
 			      <div class="modal-footer">
-			        <%= link_to 'Promote this Pawn', "", :class => 'btn btn-primary' %>
+			      	<%= submit_tag "Promote this Pawn", :class => 'btn btn-primary' %>
 			      </div>
 			   <% end %>
 		    </div>

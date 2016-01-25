@@ -35,11 +35,20 @@ class Piece < ActiveRecord::Base
     return true
   end
 
+	def pawn_to_new(new_type)
+		x = self.x_position
+	    y = self.y_position
+	    color = self.color
+	    game = self.game_id
+	 	new_type.constantize.create( :x_position => x, :y_position => y, :color => color, :game_id => game)
+	    self.destroy
+	end
+
 	private
 
 	def successful_move(x,y)
 		update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
-	  	if @pawn_promotion == true
+	  	if @promote_pawn == true
 	  		return "promote_pawn"
   		else
   			return "success"

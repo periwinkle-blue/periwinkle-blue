@@ -7,6 +7,7 @@ PeriwinkleBlue::Application.routes.draw do
   end
 
   put '/games/:game_id/:piece_id', to: 'pieces#update', :as => 'game_piece'
+  post '/games/:game_id', to: 'pieces#pawn_update', :as => 'pawn_update'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

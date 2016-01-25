@@ -13,10 +13,11 @@ class Pawn < Piece
     valid_params = super
     return false unless valid_params
     
+    @promote_pawn = can_promote?(x, y)
+
     if is_valid_two_square_move?(x,y) || 
     is_valid_one_square_move?(x,y) || 
       valid_capture?(x,y)
-        @promote_pawn = can_promote?(x, y)
         return true
     end
 
@@ -32,7 +33,7 @@ class Pawn < Piece
     
     return false
   end
-  
+
   private
 
   def can_promote?(x, y)
