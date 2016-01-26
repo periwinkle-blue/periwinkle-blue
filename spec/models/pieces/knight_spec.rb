@@ -5,7 +5,9 @@ RSpec.describe Knight, type: :model do
 
   before do
     # Create test data example
-    @knight = Knight.create(:x_position => 3, :y_position => 3)
+    @game = Game.create
+    @game.clear_board!
+    @knight = Knight.create(:x_position => 3, :y_position => 3, :game => @game)
   end
 
   it "it should allow two moves vertically and then allow only one move horizontally" do
