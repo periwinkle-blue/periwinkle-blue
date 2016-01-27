@@ -1,28 +1,11 @@
-== README
+== Periwinkle Blue
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This chess app was built as an agile team exercise through [the Firehose Project](http://thefirehoseproject.com) under the superb direction of [Ilya Krasnov](https://github.com/ilyakrasnov).  The name for our app was inspired by the legendary [Deep Blue](https://en.wikipedia.org/wiki/Deep_Blue_%28chess_computer%29) - but since we weren't able to go nearly that deep in a few weeks, we only made it to periwinkle. 
 
-Things you may want to cover:
+### Our Team
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* [Trevor Bowyer](https://github.com/tbowyer)
+* [Travis Dilweg](https://github.com/travisdilweg)
+* [Brandon McLean](https://github.com/handlez36)
+* [Matt Schmitter](https://github.com/mattschmitter)
+* [Walley Yang](https://github.com/WalleyYang)

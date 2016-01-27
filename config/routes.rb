@@ -1,6 +1,8 @@
 PeriwinkleBlue::Application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "oauth_callback" }
   root 'static_pages#index'
+  get 'howto', :to => 'static_pages#howto'
+  get 'contact', :to => 'static_pages#contact'
 
   resources :games, :except => [:update, :put] do
       patch 'join', on: :member
