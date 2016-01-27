@@ -23,7 +23,7 @@ RSpec.describe Pawn, type: :model do
   
   it "should not allow two moves forward is obstructed" do
     @piece = Piece.create(:color => 0, :x_position => 2, :y_position => 4, :game => @game)
-    expect(@pawn.valid_move?(1,4)).to eq(nil)
+    expect(@pawn.move_to(1,4)).to eq("invalid_move")
   end
   
   it "can move diagonally left when capturing a piece diagonal to it" do

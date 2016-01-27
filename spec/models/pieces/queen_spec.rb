@@ -39,9 +39,9 @@ RSpec.describe Queen, type: :model do
   end
   
   it "should not allow a move if target is obstructed" do
-    expect(@queen.valid_move?(7,4)).to eq(true)
+    expect(@queen.move_to(7,4)).to eq("success")
     @pawn = Pawn.create(:color => 0, :x_position => 5, :y_position => 4, :game => @game)
-    expect(@queen.valid_move?(7,4)).to eq(false)
+    expect(@queen.move_to(7,4)).to eq("invalid_move")
   end
   
 end
