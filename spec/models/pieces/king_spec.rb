@@ -16,6 +16,8 @@ RSpec.describe King, type: :model do
     expect(@king.valid_move?(5, 4)).to eq(true)
     expect(@king.valid_move?(7, 3)).to eq(true)
     expect(@king.valid_move?(7, 4)).to eq(true)
+    expect(@king.valid_move?(6, 5)).to eq(false)
+    expect(@king.valid_move?(8, 3)).to eq(false)
   end
   
   describe "#will_cause_check?" do

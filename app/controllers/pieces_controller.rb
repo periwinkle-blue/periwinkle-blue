@@ -4,7 +4,7 @@ class PiecesController < ApplicationController
 
 	def update	
     
-    if !is_current_user_turn
+    if !is_current_user_turn or !does_piece_belong_to_current_user?
       status = "invalid_move"
     else
 		  status = current_piece.move_to(params[:piece][:x_position], params[:piece][:y_position])
@@ -57,15 +57,15 @@ class PiecesController < ApplicationController
     end
   end
     
-  def does_piece_belong_to_current_user
+  def does_piece_belong_to_current_user?
     is_your_piece = (current_piece.color == 1) ? 
       current_user.id == current_game.black_player_id : 
       current_user.id == current_game.white_player_id
-    
-    unless is_your_piece
+    return true if is_your_piece
+    # unless is_your_piece
 #      flash[:alert] = "You cannot move your opponent's piece!"
-      render :json => { result: "error", msg: "You cannot move your opponent's piece!" } and return
-    end
+    #   render :json => { result: "error", msg: "You cannot move your opponent's piece!" } and return
+    # end
     
   end
 

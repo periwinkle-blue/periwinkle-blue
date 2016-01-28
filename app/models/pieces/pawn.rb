@@ -24,11 +24,11 @@ class Pawn < Piece
 
   end
 
-  def valid_capture?(x, y, attempt_capture = nil)
-    x_diff = self.x_position - x
-    y_diff = self.y_position - y
+  def valid_capture?(x, y)
+    x_diff = (self.x_position - x).abs
+    y_diff = (self.y_position - y).abs
     
-    if x_diff == (1 * get_direction) and (y_diff == 1 or y_diff == -1)
+    if x_diff == get_direction and y_diff == 1 and game.piece_on(x,y) and !taking_own_piece?(x, y)
       return true
     end
     

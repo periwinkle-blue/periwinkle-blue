@@ -35,6 +35,16 @@ RSpec.describe Pawn, type: :model do
     @piece = Piece.create(:color => 0, :x_position => 2, :y_position => 5, :game => @game)
     expect(@pawn.valid_move?(2,5)).to eq(true)
   end
+
+  it "cannot move diagonally if not capturing" do
+    expect(@pawn.move_to(2,3)).to eq("invalid_move")
+    expect(@pawn.move_to(2,5)).to eq("invalid_move")
+  end
+
+  it "cannot move diagonally if obstructed by teammate" do
+    @piece = Piece.create(:color => 1, :x_position => 2, :y_position => 3, :game => @game)
+    expect(@pawn.move_to(2,3)).to eq("invalid_move")
+  end
     
   it "cannot move backward diagonally, horizontally, or vertically" do
     expect(@pawn.valid_move?(4,4)).to eq(nil)

@@ -17,7 +17,7 @@ class Piece < ActiveRecord::Base
 
 	def move_to(x,y)
 	  target_piece = game.pieces.where(:x_position => x.to_i, :y_position => y.to_i).first
-	  if !valid_move?(x.to_i, y.to_i) or is_obstructed?(x.to_i, y.to_i)
+	  if !valid_move?(x.to_i, y.to_i)
 	  	return "invalid_move"
 	  elsif target_piece !=nil and target_piece.color != self.color and valid_move?(x.to_i, y.to_i) 
 	  	target_piece.destroy
@@ -30,7 +30,7 @@ class Piece < ActiveRecord::Base
 
   def valid_move?(x, y)
     # Valid parameters passed in?      
-    return false if params_out_of_bounds?(x, y) or taking_own_piece?(x,y)
+    return false if params_out_of_bounds?(x, y) or taking_own_piece?(x,y) or is_obstructed?(x, y)
     #return false if params_out_of_bounds?(x, y) or occupied_by_teammate?(x, y)
     return true
   end
