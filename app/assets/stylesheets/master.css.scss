@@ -57,6 +57,16 @@ body.games.show {
 	font-size: 48px;
 }
 
+.whitepage {
+	background: white;
+}
+
+.whitepage a:hover {
+	color: #073763;
+	font-weight: normal;
+	text-decoration: none;
+}
+
 .navbar {
 	padding: 10px 0px;
 	min-height: 0;
@@ -74,6 +84,16 @@ body.games.show {
 	background: linear-gradient(rgba(97, 98 ,116 , .05), rgba(97, 98 ,116 , .1));
 	font-size: 18px;
 	padding: 5px 0px;
+}
+
+.social-button {
+  width: 48px;
+  margin: 4px;
+}
+
+.text-link {
+	color: #073763;
+	font-weight: bold;
 }
 
 footer {
