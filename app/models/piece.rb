@@ -19,25 +19,41 @@ class Piece < ActiveRecord::Base
 	  target_piece = game.pieces.where(:x_position => x.to_i, :y_position => y.to_i).first
 	  if !valid_move?(x.to_i, y.to_i)
 	  	return "invalid_move"
-	  elsif target_piece !=nil and target_piece.color != self.color and valid_move?(x.to_i, y.to_i)
+	  elsif target_piece !=nil and target_piece.color != self.color and valid_move?(x.to_i, y.to_i) 
 	  	target_piece.destroy
-	    update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true) 
-	    return "success"
+	    successful_move(x,y)
 	  else
-	  	update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
-	  	return "success"
+	  	successful_move(x,y)
 	  end   
 	end
 
 
   def valid_move?(x, y)
     # Valid parameters passed in?      
-    return false if params_out_of_bounds?(x, y) or taking_own_piece?(x,y)
+    return false if params_out_of_bounds?(x, y) or taking_own_piece?(x,y) or is_obstructed?(x, y)
     #return false if params_out_of_bounds?(x, y) or occupied_by_teammate?(x, y)
     return true
   end
 
+	def pawn_to_new(new_type)
+		x = self.x_position
+	    y = self.y_position
+	    color = self.color
+	    game = self.game_id
+	 	new_type.constantize.create( :x_position => x, :y_position => y, :color => color, :game_id => game)
+	    self.destroy
+	end
+
 	private
+
+	def successful_move(x,y)
+		update_attributes(:x_position => x.to_i, :y_position => y.to_i, :moved => true)
+	  	if @promote_pawn == true
+	  		return "promote_pawn"
+  		else
+  			return "success"
+  		end
+	end
 
 
   	def taking_own_piece?(x, y)
@@ -54,8 +70,6 @@ class Piece < ActiveRecord::Base
 	  def params_out_of_bounds?(x, y)
 	    return true if x < 0 || y < 0 || x > 7 || y > 7
 	  end
-
-
 
     def is_valid_diagonal_move?(x, y)
       x_diff = (self.x_position - x).abs

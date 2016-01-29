@@ -35,7 +35,7 @@ RSpec.describe Rook, type: :model do
 
 	it "should not allow a move if the path is obstructed" do
 		@rookb.update_attributes(:x_position => 5, :y_position => 7)
-		expect(@rookw.valid_move?(0, 7)).to eq(false)
+		expect(@rookw.move_to(0, 7)).to eq("invalid_move")
 	end
 
 end

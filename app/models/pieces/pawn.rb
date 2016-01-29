@@ -1,7 +1,7 @@
 class Pawn < Piece
   before_create :set_defaults
   attr_accessor :direction
-  
+
   def set_defaults
     # 1 - black (bottom), 0 - white (top)
     self.moved = false
@@ -14,24 +14,32 @@ class Pawn < Piece
     valid_params = super
     return false unless valid_params
     
-    is_valid_two_square_move?(x,y) || 
+    @promote_pawn = can_promote?(x, y)
+
+    if is_valid_two_square_move?(x,y) || 
     is_valid_one_square_move?(x,y) || 
       valid_capture?(x,y)
-    
+        return true
+    end
+
   end
 
-  def valid_capture?(x, y, attempt_capture = nil)
-    x_diff = self.x_position - x
-    y_diff = self.y_position - y
+  def valid_capture?(x, y)
+    x_diff = (self.x_position - x).abs
+    y_diff = (self.y_position - y).abs
     
-    if x_diff == (1 * get_direction) and (y_diff == 1 or y_diff == -1)
+    if x_diff == get_direction and y_diff == 1 and game.piece_on(x,y) and !taking_own_piece?(x, y)
       return true
     end
     
     return false
   end
-  
+
   private
+
+  def can_promote?(x, y)
+    return true if (x == 0 && self.color == 1) || (x == 7 && self.color == 0)
+  end
   
   def get_direction
     self.color == 1 ? 1 : -1

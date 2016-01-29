@@ -23,10 +23,10 @@ RSpec.describe Bishop, type: :model do
     
     context 'given invalid diagonal parameters' do
       it "returns false" do
-        expect(@bishop.valid_move?(0,4)).to eq(false)
-        expect(@bishop.valid_move?(1,0)).to eq(false)
-        expect(@bishop.valid_move?(6,3)).to eq(false)
-        expect(@bishop.valid_move?(2,7)).to eq(false)
+        expect(@bishop.valid_move?(0,5)).to eq(nil)
+        expect(@bishop.valid_move?(1,0)).to eq(nil)
+        expect(@bishop.valid_move?(6,3)).to eq(nil)
+        expect(@bishop.valid_move?(2,7)).to eq(nil)
       end
     end
     
